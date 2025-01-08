@@ -6,9 +6,8 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { update_user } from "../slices/userSlice";
-import { register } from "../services/userService";
+import { register, manageCookies } from "../services/userService";
 import styles from "./CSS/signup.module.css";
-import Cookies from 'js-cookie';
 
 import IUser from '../types/IUser';
 
@@ -58,7 +57,7 @@ export const Signup = () => {
                 throw new Error("Token not found in the response");
             }
             // Mise du token du user dans les cookies #securité
-            Cookies.set('access_token', token.toString(), { expires: 7, path: '/' }); /* secure: true Permet de n'accepter que HTTPS */
+            manageCookies(token);
             console.log("Utilisateur créé avec succès :", createdUser);
 
             // Mise à jour du store Redux avec le nouvel utilisateur

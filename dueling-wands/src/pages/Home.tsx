@@ -6,7 +6,7 @@ export const Home = () => {
     const navigate = useNavigate();
 
     const handleLoginClick = () => {
-        navigate("/login");
+        navigate("/signin");
     };
 
     return (
@@ -24,7 +24,7 @@ export const Home = () => {
                         onClick={handleLoginClick}
                         className={styles["login-button"]}
                     >
-                        Log in
+                        Sign in
                     </button>
                 </div>
             </div>

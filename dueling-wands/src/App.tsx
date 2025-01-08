@@ -10,6 +10,7 @@ import './App.css'
 // Import des Pages
 import {Home} from "./pages/Home.tsx";
 import {Signup} from "./pages/Signup.tsx";
+import {SignIn} from "./pages/SignIn.tsx";
 
 
 function App() {
@@ -64,8 +65,8 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/signup" element={<Signup />} />
+                <Route path="/signin" element={<SignIn />} />
                 {/* <Route path="/inventory" element={<SpellsInventory />} />
-                <Route path="/signin" element={<Login />} />
                 <Route path="/history" element={<DuelsHistory />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/market" element={<Market />} />
