@@ -21,37 +21,44 @@ export const Signup = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
-    const [error, setError] = useState<string | null>(null);
 
-    const handleSubmit = async (event: React.FormEvent) => {
-        //event.preventDefault();
-        setError(null);
+    const handleSubmit = async (e : React.FormEvent) => {
+        e.preventDefault();
 
-        // if (!login.trim() || !surName.trim() || !lastName.trim() || !email.trim()) {
-        //     alert("All the fields are required");
-        //     return;
-        // }
-
-        if (password !== passwordConfirmation) {
-            alert("The passwords provided aren't the same");
+        // Gestion des critères d'acceptation du mot de passe
+        if (password.length < 8) {
+            alert("The password must be at least 8 characters long");
             return;
-        }
+          }
+          
+          if (!/\d/.test(password)) {
+            alert("The password must contain at least one number");
+            return;
+          }
+          
+          if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+            alert("The password must contain at least one special character");
+            return;
+          }          
 
         const user: IUser = {
-            id: -1,  // Cas ou le user n'a pas encore d'ID attribué
+            id: -1,  // Cas ou le user n'a pas encore d'ID attribué (id par défaut)
             login,
-            pwd :password,
+            pwd :password.toString(),
             firstName,
             lastName,
             email,
         };
 
+        // Contact de la backend et gestion des erreurs
         try {
             const createdUser = await register(user);
-
-            // Mise de l'id du user dans les cookies en tant que token
-            // À terme le token sera généré par le serveur pour l'aspect sécuritaire
-            Cookies.set('user', createdUser.id.toString(), { expires: 7, path: '/' }); 
+            const token = createdUser.token;
+            if (!token) {
+                throw new Error("Token not found in the response");
+            }
+            // Mise du token du user dans les cookies #securité
+            Cookies.set('access_token', token.toString(), { expires: 7, path: '/' }); /* secure: true Permet de n'accepter que HTTPS */
             console.log("Utilisateur créé avec succès :", createdUser);
 
             // Mise à jour du store Redux avec le nouvel utilisateur
@@ -60,8 +67,7 @@ export const Signup = () => {
             // Redirection vers la page du profile
             navigate("/profile");
         } catch (error: any) {
-            setError("Sign up error " + error.message);
-            console.error(error);
+            console.error("Sign up error " + error.message);
         }
     };
 
@@ -130,13 +136,13 @@ export const Signup = () => {
                             required
                         />
                     </div>
-                    { password !== passwordConfirmation && (
-                        <p className={styles["error-message"]}>The passords provided aren't the same</p>
-                    )}
-                    {error && <p className={styles["error-global"]}>{error}</p>}
+                    { password !== passwordConfirmation || password === "" || passwordConfirmation === "" ? (
+                        <p className={styles["error-message"]}>Please provide the same passwords</p>
+                    ) : 
                     <button type="submit" className={styles["signup-button"]}>
                         Create an account
                     </button>
+                    }
                 </form>
             </div>
         </div>
