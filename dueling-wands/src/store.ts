@@ -4,13 +4,13 @@
 
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './slices/userSlice';
-//import gameReducer from './slices/gameStateSlice';
+import tournamentReducer from './slices/tournamentSlice';
 
 
 export const store = configureStore({
   reducer: {
     user : userReducer,
-    //gameState: gameReducer
+    tournament : tournamentReducer
   },
 });
 

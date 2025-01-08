@@ -11,6 +11,10 @@ import './App.css'
 import {Home} from "./pages/Home.tsx";
 import {Signup} from "./pages/Signup.tsx";
 import {SignIn} from "./pages/SignIn.tsx";
+import {History} from "./pages/History.tsx";
+import {Grimoire} from "./pages/Grimoire.tsx";
+import {Profile} from "./pages/Profile.tsx";
+import {Tournament} from "./pages/Tournament.tsx";
 
 
 function App() {
@@ -23,7 +27,7 @@ function App() {
             <header>
                 {/* Barre de navigation */}
                 <nav>
-                    {user ? (
+                    {user || 1===1 ? ( //TODO: Comparaison abérante pour tester le rendu de la page sans connexion (à enlever)
                         <>
                             <NavLink to="/tournament" className={({ isActive }) => (isActive ? "isActive" : "")}>
                                 Tournament
@@ -66,11 +70,11 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/signin" element={<SignIn />} />
-                {/* <Route path="/inventory" element={<SpellsInventory />} />
-                <Route path="/history" element={<DuelsHistory />} />
+                <Route path="/history" element={<History />} />
+                <Route path="/inventory" element={<Grimoire />} />
                 <Route path="/profile" element={<Profile />} />
-                <Route path="/market" element={<Market />} />
-                <Route path="/tournament" element={<Tournament />} /> */}
+                <Route path="/tournament" element={<Tournament />} />
+                {/*<Route path="/market" element={<Market />} /> */}
             </Routes>
         </BrowserRouter>
     </>
