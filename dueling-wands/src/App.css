@@ -1,42 +1,85 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+/* global.css */
+:root {
+  --primary-color: #000; /* Noir élégant */
+  --secondary-color: #f5f5f7; /* Gris clair, proche du blanc */
+  --accent-color: #0071e3; /* Bleu vif d'Apple */
+  --text-color: #333; /* Noir pour le contenu */
+  --transition-speed: 0.3s; /* Transitions douces */
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: var(--text-color);
+  background-color: var(--secondary-color);
+}
+
+header {
+  background-color: var(--primary-color);
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--secondary-color);
+  margin: 0 15px;
+  font-weight: 500;
+  font-size: 16px;
+  transition: color var(--transition-speed), transform var(--transition-speed);
+}
+
+nav a:hover {
+  color: var(--accent-color);
+  transform: scale(1.1);
+}
+
+nav a.isActive {
+  color: var(--accent-color);
+  font-weight: bold;
+}
+
+main {
+  padding: 50px 20px;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+h1 {
+  font-size: 3rem;
+  color: var(--primary-color);
+  margin-bottom: 20px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+button {
+  background-color: var(--accent-color);
+  color: var(--secondary-color);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color var(--transition-speed), transform var(--transition-speed);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+button:hover {
+  background-color: #005bb5;
+  transform: scale(1.05);
 }
 
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  font-size: 14px;
 }

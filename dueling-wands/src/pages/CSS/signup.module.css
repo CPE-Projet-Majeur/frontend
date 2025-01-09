@@ -1,0 +1,105 @@
+/* Conteneur principal centré */
+.signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f5f7; /* Fond doux Apple-like */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    margin: 0;
+}
+
+/* Carte d'inscription */
+.signup-card {
+    background-color: #ffffff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 30px 40px;
+    width: 450px;
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+/* Animation d'apparition */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Titre principal */
+.signup-card h1 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #1d1d1f;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Champs d'entrée */
+.input-container {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-container label {
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    color: #6e6e73;
+    font-weight: 500;
+}
+
+.input-container input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d2d2d7;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    outline: none;
+}
+
+.input-container input:focus {
+    border-color: #0071e3;
+    box-shadow: 0 0 5px rgba(0, 113, 227, 0.5);
+}
+
+/* Erreur sur les champs */
+.error-message {
+    color: #d93025;
+    font-size: 0.9rem;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+/* Bouton de soumission */
+.signup-button {
+    background-color: #0071e3;
+    color: #ffffff;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.signup-button:hover {
+    background-color: #005bb5;
+    transform: scale(1.02);
+}
+
+/* Message d'erreur global */
+.error-global {
+    color: #d93025;
+    text-align: center;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
