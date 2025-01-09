@@ -53,3 +53,19 @@ export const joinRoom = async (code : string): Promise<number> => {
     }
     return await response.json();
 };
+
+export const startTournament = async (userId : number): Promise<boolean> => {
+    const url: string = base_url+"/tournament/code";
+    const response = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: 'include',
+        body: JSON.stringify({userId}),
+    });
+    if (!response.ok) {
+        throw new Error(`Erreur lors du lancement du Tournoi : ${response.statusText}`);
+    }
+    return await response.json();
+};

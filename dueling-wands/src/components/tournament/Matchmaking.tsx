@@ -1,10 +1,18 @@
 import React from 'react';
 import { QrCode } from './QrCode';
-import { fetchTournamentByCode } from '../../services/tournamentService';
+import { Socket } from "socket.io-client";
 import { useDispatch } from 'react-redux';
 import { update_tournament } from '../../slices/tournamentSlice';
+import IUser from '../../types/IUser';
 
-export const Matchmaking = () => {
+interface Iprops {
+    socket: Socket;
+    user: IUser;
+}
+
+export const Matchmaking = (props : Iprops) => {
+    const socket = props.socket;
+    const user: IUser = props.user;
 
     const dispatch = useDispatch();
     //const tournament = await fetchTournamentByCode(generatedCode);

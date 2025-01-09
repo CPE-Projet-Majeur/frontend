@@ -1,15 +1,18 @@
-import React, { Fragment, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { fetchTournamentCode, joinRoom, fetchTournamentByCode } from '../../services/tournamentService';
-import { set_tournament_code, update_tournament } from '../../slices/tournamentSlice';
+import React, { Fragment, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchTournamentCode, joinRoom, startTournament } from '../../services/tournamentService';
+import { set_tournament_code, set_owner_id } from '../../slices/tournamentSlice';
+import { RootState } from '../../store';
 
 export const TournamentCreation = () => {
     const dispatch = useDispatch();
 
+    const ownerId : number = useSelector((state: RootState) => state.user.user?.id || -1);
+
     const [generatedCode, setGeneratedCode] = useState<string>("");
     const [friendCode, setFriendCode] = useState<string>("");
     const [roomOk, setRoomOk] = useState<number>(-1);
-    const [tournamentOwner, setTournamentOwner] = useState<boolean>(true); // Mettre a false quand j'aurai fini de tester
+    const [tournamentOwner, setTournamentOwner] = useState<boolean>(false); // Mettre a false quand j'aurai fini de tester
 
     // Demander au backend de générer un code de tournoi à envoyer aux amis pour rejoindre la room.
     const generateTournamentCode = async () => { 
@@ -17,12 +20,17 @@ export const TournamentCreation = () => {
         setGeneratedCode(tournamentCode);
         setFriendCode("");
         setTournamentOwner(true);
+        dispatch(set_owner_id({ id : ownerId }));
         joinTournament();
     }
 
-    const startTournament = async () => { 
-        const tournament = await fetchTournamentByCode(generatedCode);
-        dispatch(update_tournament({ tournament }));
+    const start = async () => { 
+        const tournament : boolean= await startTournament(ownerId);
+        tournament ? (
+            console.log("Tournament started")
+        ) : (
+            console.log("Error when starting the tournament")
+        );
     }
 
     const joinTournament = async () => {
@@ -75,7 +83,7 @@ export const TournamentCreation = () => {
             {tournamentOwner && (
                 <div>
                     <p>Number of witchs and wizards in the room : </p>
-                    <button onClick={startTournament}> Start the tournament </button>
+                    <button onClick={start}> Start the tournament </button>
                 </div>
             )}
 

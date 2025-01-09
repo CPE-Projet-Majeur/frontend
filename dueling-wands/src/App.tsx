@@ -1,5 +1,5 @@
 // Import des modules
-import { useSelector} from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import React from "react";
 import { RootState } from "./store";
 import {BrowserRouter, NavLink, Route, Routes} from "react-router-dom";
@@ -15,11 +15,25 @@ import {History} from "./pages/History.tsx";
 import {Grimoire} from "./pages/Grimoire.tsx";
 import {Profile} from "./pages/Profile.tsx";
 import {Tournament} from "./pages/Tournament.tsx";
+import { update_user } from "./slices/userSlice.ts";
 
 
 function App() {
 
-  const { user } = useSelector((state: RootState) => state.user);
+  let { user } = useSelector((state: RootState) => state.user);
+
+  user = { // Simulation d'un user connecté
+    id: 1,
+    token : "test",
+    login: "test",
+    email: "a@a",
+    pwd: "a",
+    firstName: "a",
+    lastName: "a",
+    house: 1
+  }
+//   const dispach = useDispatch();
+//   dispach(update_user({ user }));
 
   return (
     <>
@@ -27,7 +41,7 @@ function App() {
             <header>
                 {/* Barre de navigation */}
                 <nav>
-                    {user || 1===1 ? ( //TODO: Comparaison abérante pour tester le rendu de la page sans connexion (à enlever)
+                    {user ? ( //TODO: Comparaison abérante pour tester le rendu de la page sans connexion (à enlever)
                         <>
                             <NavLink to="/tournament" className={({ isActive }) => (isActive ? "isActive" : "")}>
                                 Tournament
