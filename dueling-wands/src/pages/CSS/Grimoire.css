@@ -1,0 +1,78 @@
+/* Applique une taille pleine page pour le carrousel */
+.container {
+    position: relative;
+    width: 100vw; 
+    height: 95vh; /* Occupe toute la hauteur de l'écran */
+    overflow: hidden;
+    margin:0%;
+    padding-right:0%;
+    padding-left:0%;
+    max-width: 100vw;
+
+  }
+  
+  /* Applique un fond sombre semi-transparent sur la légende du carrousel */
+  .ccarousel-caption {
+    /* margin-bottom: 5vh; */
+    background: rgba(0, 0, 0, 0.8); /* Fond sombre avec transparence */
+    padding: 20px; /* Espace autour du texte */
+    border-radius: 10px; /* Coins arrondis pour le fond */
+  }
+  
+  /* Styliser les titres et paragraphes dans les légendes */
+  .ccarousel-caption h5 {
+    color: #fff; /* Texte blanc pour les titres */
+    font-size: 2rem; /* Taille de police plus grande pour le titre */
+    font-weight: bold;
+  }
+  
+  .ccarousel-caption p {
+    color: #ddd; /* Texte légèrement clair pour les descriptions */
+    font-size: 1.2rem; /* Taille de police plus petite pour les descriptions */
+  }
+  
+  /* Assurez-vous que l'image occupe toute la largeur et hauteur */
+  .c-image {
+    width: 100vw; /* Occupe toute la largeur de l'écran */
+    height: 95vh; /* Occupe toute la hauteur de l'écran */
+    object-fit: cover; /* L'image couvre toute la zone sans se déformer */
+    overflow: hidden;
+  }
+  
+  .carousel-indicators{
+    background-color: #9f9f9f;
+    border-radius: 1rem;
+  }
+
+  .c-carousel button {
+    background-color:#9f9f9f;
+    margin-top:auto;
+    margin-bottom:auto;
+    border-radius: 1rem;
+    margin-right:1vw;
+    margin-left:1vw;
+    animation: bounce 1.7s ease-in-out infinite; /* Sauts constants */
+  }
+
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+  }
+
+  .c-carousel button:hover {
+    background-color: #9f9f9f;
+  }
+
+  .carousel-control-next-icon, .carousel-control-prev-icon {
+    width : 2vw;
+    height: 5vh;
+  }
+
+  .carousel-control-next, .carousel-control-prev {
+    width : 4vw;
+    height : 6vh;
+  }

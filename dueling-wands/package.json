@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@coreui/coreui": "^5.2.0",
+    "@coreui/react": "^5.4.1",
     "@reduxjs/toolkit": "^2.5.0",
     "js-cookie": "^3.0.5",
     "qrcode.react": "^4.2.0",

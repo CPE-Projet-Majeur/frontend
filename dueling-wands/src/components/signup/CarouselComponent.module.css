@@ -1,16 +1,16 @@
-.carousel-container {
+.carousel_container {
 max-width: 600px;
 margin: 0 auto;
 position: relative;
 }
 
-.carousel-item img {
+.carousel_item img {
 width: 100%;
 border-radius: 10px;
 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.carousel-caption {
+.carousel_caption {
 position: relative;
 left: 50%;
 transform: translateX(-50%);

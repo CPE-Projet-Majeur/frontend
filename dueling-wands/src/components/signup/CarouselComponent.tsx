@@ -1,6 +1,6 @@
 import React from 'react';
 import Slider from 'react-slick';
-import './CarouselComponent.css';
+import styles from './CarouselComponent.module.css';
 import EHouses from '../../types/EHouses';
 
 interface ICarousel {
@@ -47,27 +47,27 @@ function CarouselComponent(props : ICarousel) {
   ];
 
   return (
-    <div className="carousel-container">
-    <link
-        rel="stylesheet"
-        type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
-    />
-    <link
-        rel="stylesheet"
-        type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
-    />
-      <Slider {...settings}>
-        {items.map((item, index : number) => (
-          <div key={index} className="carousel-item">
-            <img src={item.src} />
-            <div className="carousel-caption">
-              <p>{item.description}</p>
+    <div className={styles.carousel_container} >
+      <link
+          rel="stylesheet"
+          type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
+      />
+      <link
+          rel="stylesheet"
+          type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
+      />
+        <Slider {...settings}>
+          {items.map((item, index : number) => (
+            <div key={index} className={styles.carousel_item}>
+              <img src={item.src} />
+              <div className={styles.carousel_caption}>
+                <p>{item.description}</p>
+              </div>
             </div>
-          </div>
-        ))}
-      </Slider>
+          ))}
+        </Slider>
     </div>
   );
 }

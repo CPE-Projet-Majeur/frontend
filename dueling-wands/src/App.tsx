@@ -22,18 +22,6 @@ function App() {
 
   let { user } = useSelector((state: RootState) => state.user);
 
-//   user = { // Simulation d'un user connecté
-//     id: 1,
-//     login: "test",
-//     email: "a@a",
-//     password: "a",
-//     firstName: "a",
-//     lastName: "a",
-//     house: 1
-//   }
-//   const dispach = useDispatch();
-//   dispach(update_user({ user }));
-
   return (
     <>
         <BrowserRouter>
@@ -48,15 +36,12 @@ function App() {
                             <NavLink to="/history" className={({ isActive }) => (isActive ? "isActive" : "")}>
                                 Duels History
                             </NavLink>
-                            <NavLink to="/grimoire" className={({ isActive }) => (isActive ? "isActive" : "")}>
-                                Spell Grimoire
-                            </NavLink>
                             <NavLink to="/market" className={({ isActive }) => (isActive ? "isActive" : "")}>
                                 Market
                             </NavLink>
                             <NavLink to="/profile" className={({ isActive }) => (isActive ? "isActive" : "")}>
                                 {/* <User user={user}/> */}
-                                USER
+                                Profile
                             </NavLink>
                             <button /*onClick={handleLogout}*/ style={{ marginLeft: "10px" }}>
                                 Log Out
@@ -66,6 +51,9 @@ function App() {
                         <>
                             <NavLink to="/" className={({ isActive }) => (isActive ? "isActive" : "")}>
                               Home
+                            </NavLink>
+                            <NavLink to="/grimoire" className={({ isActive }) => (isActive ? "isActive" : "")}>
+                                Spell Grimoire
                             </NavLink>
                             <NavLink to="/signin" className={({ isActive }) => (isActive ? "isActive" : "")}>
                                 Sign In
@@ -84,7 +72,7 @@ function App() {
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/history" element={<History />} />
-                <Route path="/inventory" element={<Grimoire />} />
+                <Route path="/grimoire" element={<Grimoire />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/tournament" element={<Tournament />} />
                 {/*<Route path="/market" element={<Market />} /> */}

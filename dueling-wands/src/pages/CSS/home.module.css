@@ -3,7 +3,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
     background-color: #f5f5f7;
     margin: 0;
     overflow-y: hidden;
@@ -13,7 +12,7 @@
 .video-container {
     position: relative;
     width: 100vw; /* Occupe toute la largeur de l'écran */
-    height: 100vh; /* Occupe toute la hauteur de l'écran */
+    height: 95vh; /* Occupe toute la hauteur de l'écran */
     overflow: hidden;
     border-radius: 0; /* Supprime les bordures arrondies */
 }
