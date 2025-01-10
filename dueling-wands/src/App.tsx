@@ -22,16 +22,15 @@ function App() {
 
   let { user } = useSelector((state: RootState) => state.user);
 
-  user = { // Simulation d'un user connecté
-    id: 1,
-    token : "test",
-    login: "test",
-    email: "a@a",
-    pwd: "a",
-    firstName: "a",
-    lastName: "a",
-    house: 1
-  }
+//   user = { // Simulation d'un user connecté
+//     id: 1,
+//     login: "test",
+//     email: "a@a",
+//     password: "a",
+//     firstName: "a",
+//     lastName: "a",
+//     house: 1
+//   }
 //   const dispach = useDispatch();
 //   dispach(update_user({ user }));
 

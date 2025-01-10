@@ -25,6 +25,7 @@ export const SignIn = () => {
         try {
             // Première requête : Authentification
             const userLogin : Ilogin = await login(username, password);
+            console.log("Données de connexion récupérées :", userLogin);
             console.log(`Utilisateur authentifié avec l'ID : ${userLogin.userId}`);
 
             // Deuxième requête : Récupération des informations utilisateur

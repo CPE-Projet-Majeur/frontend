@@ -14,7 +14,8 @@ export const manageCookies = (token : string) => {
     Cookies.set('access_token', token.toString(), { expires: 7, path: '/' }); /* secure: true Permet de n'accepter que HTTPS */
 }
 
-export const register = async (user: IUser): Promise<IUser> => {
+// registration du user, renvoie le token
+export const register = async (user: IUser): Promise<Ilogin> => {
     const url: string = base_url+"/user";
     console.log(url)
 
@@ -42,6 +43,7 @@ export const register = async (user: IUser): Promise<IUser> => {
  */
 export const login = async (username: string, password: string): Promise<Ilogin> => {
     const url: string = base_url+"/auth";
+    console.log("try to request for login : ", username, password);
 
     const response = await fetch(url, {
         method: "POST",

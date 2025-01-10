@@ -21,6 +21,7 @@ export const Profile = () => {
                             src="https://videos.pexels.com/video-files/5453622/5453622-uhd_2560_1440_24fps.mp4"
                             autoPlay
                             muted
+                            loop
                             playsInline
                         />
                     </div>

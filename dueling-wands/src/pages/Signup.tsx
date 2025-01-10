@@ -10,6 +10,8 @@ import { register, manageCookies } from "../services/userService";
 import styles from "./CSS/signup.module.css";
 
 import IUser from '../types/IUser';
+import CarouselComponent from "../components/signup/CarouselComponent";
+import EHouses from "../types/EHouses";
 
 export const Signup = () => {
     const dispatch = useDispatch();
@@ -19,6 +21,7 @@ export const Signup = () => {
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [house, setHouse] = useState(EHouses.GRYFFINDOR);
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
     const handleSubmit = async (e : React.FormEvent) => {
@@ -41,27 +44,32 @@ export const Signup = () => {
           }          
 
         const user: IUser = {
-            id: -1,  // Cas ou le user n'a pas encore d'ID attribué (id par défaut)
             login,
-            pwd :password.toString(),
+            password : password.toString(),
             firstName,
             lastName,
             email,
+            house,
+            account : 0,
+            wins: 0,
+            defeats : 0,
         };
 
         // Contact de la backend et gestion des erreurs
         try {
-            const createdUser = await register(user);
-            const token = createdUser.token;
+            const registration = await register(user);
+            const token = registration.token;
+            user.id = registration.userId;
+            
             if (!token) {
                 throw new Error("Token not found in the response");
             }
             // Mise du token du user dans les cookies #securité
             manageCookies(token);
-            console.log("Utilisateur créé avec succès :", createdUser);
+            console.log("Utilisateur créé avec succès :", user);
 
             // Mise à jour du store Redux avec le nouvel utilisateur
-            dispatch(update_user({ user: createdUser }));
+            dispatch(update_user({ user: user }));
 
             // Redirection vers la page du profile
             navigate("/profile");
@@ -70,11 +78,20 @@ export const Signup = () => {
         }
     };
 
+    // Gestion des changements de slides actives du caroussel pour attribuer une maison à un user
+    const handleSlideChange = (index: number, activeItem: { title: EHouses; description: string }) => {
+    console.log(`Slide actif : ${index}, Titre : ${activeItem.title}`);
+    setHouse(activeItem.title);
+    };
+
     return (
         <div className={styles["signup-container"]}>
             <div className={styles["signup-card"]}>
                 <h1>Create an account</h1>
                 <form onSubmit={handleSubmit}>
+                    <div className={styles["input-container"]}>
+                    <CarouselComponent onSlideChange={handleSlideChange}/>
+                    </div>
                     <div className={styles["input-container"]}>
                         <label htmlFor="login">Username :</label>
                         <input
