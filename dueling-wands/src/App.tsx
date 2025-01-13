@@ -16,6 +16,7 @@ import {Grimoire} from "./pages/Grimoire.tsx";
 import {Profile} from "./pages/Profile.tsx";
 import {Tournament} from "./pages/Tournament.tsx";
 import { update_user } from "./slices/userSlice.ts";
+import { Duel } from "./pages/Duel.tsx";
 
 
 function App() {
@@ -55,6 +56,9 @@ function App() {
                             <NavLink to="/grimoire" className={({ isActive }) => (isActive ? "isActive" : "")}>
                                 Spell Grimoire
                             </NavLink>
+                            <NavLink to="/duel" className={({ isActive }) => (isActive ? "isActive" : "")}>
+                                Duel
+                            </NavLink>
                             <NavLink to="/signin" className={({ isActive }) => (isActive ? "isActive" : "")}>
                                 Sign In
                             </NavLink>
@@ -75,6 +79,7 @@ function App() {
                 <Route path="/grimoire" element={<Grimoire />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/tournament" element={<Tournament />} />
+                <Route path="/duel" element={<Duel />} />
                 {/*<Route path="/market" element={<Market />} /> */}
             </Routes>
         </BrowserRouter>

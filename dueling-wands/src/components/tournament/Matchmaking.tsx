@@ -5,12 +5,12 @@ import { useDispatch } from 'react-redux';
 import { update_tournament } from '../../slices/tournamentSlice';
 import IUser from '../../types/IUser';
 
-interface Iprops {
+interface IProps {
     socket: Socket;
     user: IUser;
 }
 
-export const Matchmaking = (props : Iprops) => {
+export const Matchmaking = (props : IProps) => {
     const socket = props.socket;
     const user: IUser = props.user;
 

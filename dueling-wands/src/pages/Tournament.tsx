@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { io, Socket } from 'socket.io-client';
 import ITournament from '../types/ITournament.ts';
 import { update_tournament } from '../slices/tournamentSlice.ts';
+import { Duel } from './Duel.tsx';
 
 enum TOURNAMENT_CREATION {
     TOURNAMENT_JOINED = 'TOURNAMENT_JOINED',
@@ -74,10 +75,9 @@ export const Tournament = () => {
                     <Matchmaking socket={socket} user={user}/>
                 </div>
             )}
-            {inTournament && matchState !== 'unset' && ( // Remettre a 'unset' quand j'aurai fini de tester
+            {inTournament && matchState !== 'unset' && socket &&( // Remettre a 'unset' quand j'aurai fini de tester
                 <div>
-                    <Fight />
-                    <FightResults />
+                    <Duel socket={socket} />
                 </div>
             )}
         </Fragment>
