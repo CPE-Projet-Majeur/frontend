@@ -16,13 +16,17 @@ export const PlayerSummary = (props : IProps) => {
     //props.isMainCharacter = false;
 
     return (
-        <div style={{backgroundColor : props.isMainCharacter ? red : blue}}>
-            <div className={styles.info}>
-                <h3 className={styles.name}>{props.name}</h3>
-            </div>
-            <div className={styles.health}>
-                <Bar label="HP" value={props.health} maxValue={props.maxHealth} />
-            </div>
+        <div
+          className={`${styles.container} ${
+            props.isMainCharacter ? styles.mainCharacter : styles.opponent
+          }`}
+        >
+          <div className={styles.info}>
+            <h3 className={styles.name}>{props.name}</h3>
+          </div>
+          <div className={styles.health}>
+            <Bar label="HP" value={props.health} maxValue={props.maxHealth} />
+          </div>
         </div>
-    )
+      );
 }

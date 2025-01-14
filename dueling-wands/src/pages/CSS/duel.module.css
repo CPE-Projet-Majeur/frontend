@@ -1,16 +1,82 @@
+/* Game.module.css */
+
+/* Conteneur principal */
 .main {
-    background: linear-gradient(
-      90deg,
-      rgba(24, 161, 203, 1) 0%,
-      rgba(255, 255, 255, 1) 35%,
-      rgba(255, 255, 255, 1) 65%,
-      rgba(253, 172, 0, 1) 100%
-    );
-  
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: space-between;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #f8f8f8; /* Couleur de fond douce */
+  padding: 2rem;
+  font-family: 'Georgia', serif; /* Police magique */
+  color: #3f3d56; /* Gris profond */
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* Menu de départ */
+.startMenu {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.startMenu h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #5e4b8b; /* Violet magique */
+}
+
+.startMenu button {
+  padding: 0.8rem 2rem;
+  border-radius: 30px;
+  background-color: #5e4b8b; /* Violet magique */
+  color: white;
+  font-size: 1.2rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.startMenu button:hover {
+  background-color: #3c2d6d; /* Violet foncé au survol */
+}
+
+/* Battle */
+.battle {
+  background-color: #fff;
+  padding: 3rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.battle h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #3f3d56; /* Gris pour le texte principal */
+}
+
+.battle button {
+  padding: 0.8rem 2rem;
+  border-radius: 30px;
+  background-color: #3f3d56; /* Gris profond */
+  color: white;
+  font-size: 1.2rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.battle button:hover {
+  background-color: #2a2a2a; /* Gris plus foncé */
+}
+
+/* Game Over */
+.gameOver {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #e70000; /* Rouge pour l'alerte */
+  margin-top: 2rem;
+}

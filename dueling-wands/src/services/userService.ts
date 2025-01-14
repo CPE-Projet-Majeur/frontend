@@ -18,6 +18,7 @@ export const manageCookies = (token : string) => {
 export const register = async (user: IUser): Promise<Ilogin> => {
     const url: string = base_url+"/user";
     console.log(url)
+    console.log(user)
 
     const response = await fetch(url, {
         method: "POST",
@@ -42,7 +43,7 @@ export const register = async (user: IUser): Promise<Ilogin> => {
  * @returns Promise Une promesse contenant l'ID de l'utilisateur
  */
 export const login = async (username: string, password: string): Promise<Ilogin> => {
-    const url: string = base_url+"/auth";
+    const url: string = base_url+"/login";
     console.log("try to request for login : ", username, password);
 
     const response = await fetch(url, {
@@ -56,6 +57,23 @@ export const login = async (username: string, password: string): Promise<Ilogin>
     if (!response.ok) {
         throw new Error("Nom d'utilisateur ou mot de passe incorrect !");
     }
+    return await response.json();
+};
+
+export const fetchUserByName = async (userName: string): Promise<IUser> => {
+    const url: string = base_url+"/user/username/"+userName;
+
+    const response = await fetch(url, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error(`Erreur lors de la récupération de l'utilisateur : ${response.statusText}`);
+    }
+
     return await response.json();
 };
 

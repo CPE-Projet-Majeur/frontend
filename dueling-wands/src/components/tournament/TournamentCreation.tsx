@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchTournamentCode, joinRoom, startTournament } from '../../services/tournamentService';
 import { set_tournament_code, set_owner_id } from '../../slices/tournamentSlice';
 import { RootState } from '../../store';
+import styles from "./CSS/tournamentCreation.module.css"
 
 export const TournamentCreation = () => {
     const dispatch = useDispatch();
@@ -62,11 +63,12 @@ export const TournamentCreation = () => {
     }
 
     return(
-        <Fragment>
+        <div className={styles.container}>
+            <h2>Magic Room Creation</h2>
             {roomOk!==0 ? (
-                <div>
+                <div className={styles.section}>
                     <p>Generate a <b>Tournament Code</b> to share with your friends</p>
-                    <output>Room Code : </output>
+                    {generatedCode && <p>Room Code : {generatedCode}</p>}
                     <button onClick={generateTournamentCode}> Generate </button>
                     <p>Write your friend's <b>Tournament Code</b> to take part !</p>
                     <input
@@ -81,11 +83,10 @@ export const TournamentCreation = () => {
                 <p>waiting for the tournament owner to start...</p>
             )}
             {tournamentOwner && (
-                <div>
+                <div className={styles.tournamentOwnerSection}>
                     <p>Number of witchs and wizards in the room : </p>
                     <button onClick={start}> Start the tournament </button>
                 </div>
             )}
-
-        </Fragment>
+        </div>
 )};

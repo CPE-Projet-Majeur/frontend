@@ -1,0 +1,47 @@
+/* Fight.module.css */
+
+/* Conteneur principal */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f4f4f4; /* Fond doux pour une ambiance magique */
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Ombre douce pour la profondeur */
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  /* Section de l'arbre */
+  .treeSection {
+    margin-bottom: 2rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  /* Section du QR Code */
+  .qrCodeSection {
+    margin-top: 2rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  /* Pour le QR code */
+  .qrCodeSection img {
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Titre */
+  h2 {
+    font-size: 2rem;
+    color: #3f3d56; /* Gris profond */
+    font-family: 'Georgia', serif; /* Police magique */
+    margin-bottom: 1.5rem;
+    letter-spacing: 1.5px;
+  }
+  

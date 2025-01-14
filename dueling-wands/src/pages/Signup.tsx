@@ -24,25 +24,32 @@ export const Signup = () => {
     const [password, setPassword] = useState("");
     const [house, setHouse] = useState(EHouses.GRYFFINDOR);
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
+    // Dans l'idéal il faudra aussi faire une garde sur les login (username) quoi doivent être uniques
+    let checkPassword = () : boolean => {
+        if (password.length < 8) {
+            alert("The password must be at least 8 characters long");
+            return false;
+          }
+          
+        else if (!/\d/.test(password)) {
+            alert("The password must contain at least one number");
+            return false;
+          }
+          
+        else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+            alert("The password must contain at least one special character");
+            return false;
+          }   
+        
+        return  true;      
+
+    }
 
     const handleSubmit = async (e : React.FormEvent) => {
         e.preventDefault();
 
         // Gestion des critères d'acceptation du mot de passe
-        if (password.length < 8) {
-            alert("The password must be at least 8 characters long");
-            return;
-          }
-          
-          if (!/\d/.test(password)) {
-            alert("The password must contain at least one number");
-            return;
-          }
-          
-          if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-            alert("The password must contain at least one special character");
-            return;
-          }          
+        if (!checkPassword()){return;}
 
         const user: IUser = {
             login,
@@ -54,13 +61,14 @@ export const Signup = () => {
             account : 0,
             wins: 0,
             defeats : 0,
+            roleList : [],
         };
 
         // Contact de la backend et gestion des erreurs
         try {
             const registration = await register(user);
             const token = registration.token;
-            user.id = registration.userId;
+            user.id = registration.user.id;
             
             if (!token) {
                 throw new Error("Token not found in the response");
@@ -80,7 +88,7 @@ export const Signup = () => {
     };
 
     // Gestion des changements de slides actives du caroussel pour attribuer une maison à un user
-    const handleSlideChange = (index: number, activeItem: { title: EHouses; description: string }) => {
+    const handleSlideChange = (index: number, activeItem: { title: EHouses, description: string }) => {
     console.log(`Slide actif : ${index}, Titre : ${activeItem.title}`);
     setHouse(activeItem.title);
     };

@@ -25,16 +25,30 @@ export const Battle = (props:IProps) => {
     return (
         <>
             <h2 className={styles.gameHeader}>{playerName} VS {opponentName}</h2>
-            <div className = {styles.opponent}>
-                <div className = {styles.summary}>
+            <div className={styles.summaryContainer}>
+                <div className={styles.opponent}>
+                    <div className={styles.summary}>
                     <PlayerSummary 
                         isMainCharacter={false} 
                         health={opponentHealth}
                         name={opponentName}
                         maxHealth={maxHealth}
                     />
+                    </div>
+                </div>
+
+                <div className={styles.user}>
+                    <div className={styles.summary}>
+                    <PlayerSummary 
+                        isMainCharacter={true} 
+                        health={playerHealth}
+                        name={playerName}
+                        maxHealth={maxHealth}
+                    />
+                    </div>
                 </div>
             </div>
+
 
             <div className= {styles.characters}>
                 <div className={styles.gameImages}>
@@ -52,17 +66,6 @@ export const Battle = (props:IProps) => {
                             //className={styles[opponentAnimation]}
                         />
                     </div>
-                </div>
-            </div>
-
-            <div className = {styles.user}>
-                <div className = {styles.summary}>
-                    <PlayerSummary 
-                        isMainCharacter={true}                        
-                        health={playerHealth}
-                        name={playerName}
-                        maxHealth={maxHealth}
-                    />
                 </div>
             </div>
 

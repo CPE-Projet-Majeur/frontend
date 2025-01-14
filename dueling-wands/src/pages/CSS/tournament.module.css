@@ -1,0 +1,88 @@
+/* Tournament.module.css */
+
+/* Conteneur principal */
+.container {
+    background-color: #f1f1f1; /* Fond clair, style Apple */
+    color: #333; /* Texte sombre et élégant */
+    font-family: 'Roboto', sans-serif; /* Police moderne et simple */
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Ombre subtile pour donner de la profondeur */
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  /* Titre principal */
+  h1 {
+    text-align: center;
+    font-size: 3rem;
+    color: #3f3d56; /* Gris profond inspiré d'Apple */
+    font-family: 'Georgia', serif; /* Police élégante inspirée de l'univers Harry Potter */
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Style des sections */
+  .section {
+    background-color: #fff; /* Fond blanc pour un effet épuré */
+    border: 1px solid #dedede; /* Bordure subtile mais élégante */
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 3px 20px rgba(0, 0, 0, 0.05);
+  }
+  
+  .section h2 {
+    font-size: 2.2rem;
+    color: #3f3d56; /* Gris profond */
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Effet bouton élégant */
+  button {
+    background-color: #007aff; /* Bleu Apple pour l'élégance */
+    color: white;
+    margin-right: 1rem;
+    margin-left: 1rem;
+    border: none;
+    padding: 0.8rem 1.3rem;
+    font-size: 1rem;
+    border-radius: 20px;
+    cursor:crosshair;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  button:hover {
+    background-color: #005bbb; /* Bleu plus foncé au survol */
+    transform: scale(1.05);
+  }
+  
+  /* Effet d'ombre magique pour un peu de magie */
+  button:active {
+    box-shadow: 0 0 15px rgba(255, 204, 0, 0.7); /* Effet magique au clic */
+  }
+  
+  /* Section pour les résultats du duel */
+  .duelResult {
+    background-color: #f9f9f9;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  .duelResult h3 {
+    font-size: 2.5rem;
+    color: #2f2f2f; /* Gris foncé */
+    margin-bottom: 1rem;
+  }
+  
+  .duelResult p {
+    font-size: 1.3rem;
+    color: #666;
+    margin-top: 1rem;
+  }
+  

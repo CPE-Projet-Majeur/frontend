@@ -12,24 +12,38 @@ interface IProps {
 export const Duel = (props : IProps) => {
     const socket=props.socket;
     const [mode,setMode] = useState('start');
-    const [winner, setWinner] = useState('');
+    const [winner, setWinner] = useState(null);
 
     useEffect(() => { 
         if (!socket){
             console.log("Chaussette absente")
             return;
         }
-        socket.on(ESocket.)// Continuer ici, réévaluer les évenements socket
+        //socket.on(ESocket) {};// Continuer ici, réévaluer les évenements socket
 
     }, [socket]);
 
-    return(
+    return (
         <div className={styles.main}>
-            {mode === 'start' && (<StartMenu onStartClick={() => setMode('battle')}/>)}
-            {mode === 'battle' && (<Battle onGameEnd={winner => {
-                setWinner(winner);
-                setMode('gameOver');
-            }}/>)}
-            {mode === 'gameOver' && (<>Game Over, the winner is {winner}</>)}
+            {mode === 'start' && (
+                <div className={styles.startMenu}>
+                    <h2>Welcome to the Magical Battle</h2>
+                    <StartMenu onStartClick={() => setMode('battle')} />
+                </div>
+            )}
+            {mode === 'battle' && (
+                <div className={styles.battle}>
+                    <Battle onGameEnd={winner => {
+                        setWinner(winner);
+                        setMode('gameOver');
+                    }} />
+                </div>
+            )}
+            {mode === 'gameOver' && (
+                <div className={styles.gameOver}>
+                    <p>Game Over, the winner is <b>{winner}</b></p>
+                </div>
+            )}
         </div>
-    )};
+    );
+};

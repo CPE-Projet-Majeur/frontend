@@ -20,9 +20,9 @@ body {
 }
 
 header {
+  letter-spacing: 1px;
   background-color: var(--primary-color);
   height:5vh;
-  padding: 10px 20px;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -38,9 +38,9 @@ nav {
 nav a {
   text-decoration: none;
   color: var(--secondary-color);
-  margin: 0 15px;
+  margin: 1rem 20px;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 17px;
   transition: color var(--transition-speed), transform var(--transition-speed);
 }
 

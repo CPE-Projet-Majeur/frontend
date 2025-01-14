@@ -11,4 +11,5 @@ export default interface IUser {
     account: number;
     wins : number;
     defeats : number;
+    roleList : string[];
 }

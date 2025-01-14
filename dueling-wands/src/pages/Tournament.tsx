@@ -10,6 +10,7 @@ import { io, Socket } from 'socket.io-client';
 import ITournament from '../types/ITournament.ts';
 import { update_tournament } from '../slices/tournamentSlice.ts';
 import { Duel } from './Duel.tsx';
+import styles from "./CSS/tournament.module.css"
 
 enum TOURNAMENT_CREATION {
     TOURNAMENT_JOINED = 'TOURNAMENT_JOINED',
@@ -63,23 +64,23 @@ export const Tournament = () => {
     }
 
     return (
-        <Fragment>
+        <div className={styles.container}>
             <h1>Tournament</h1>
-            {!inTournament  &&(
-                <div>
+            {inTournament  &&( // Remettre
+                <div className={styles.section}>
                     <TournamentCreation/>
                 </div>
             ) }
-            {inTournament && socket &&( 
-                <div>
+            {inTournament && socket &&( //Enlever !
+                <div className={styles.section}>
                     <Matchmaking socket={socket} user={user}/>
                 </div>
             )}
-            {inTournament && matchState !== 'unset' && socket &&( // Remettre a 'unset' quand j'aurai fini de tester
-                <div>
+            {!inTournament && matchState !== 'set' && socket &&( // Remettre a 'unset' quand j'aurai fini de tester + enlever !
+                <div className={styles.section}>
                     <Duel socket={socket} />
                 </div>
             )}
-        </Fragment>
+        </div>
     );
 };

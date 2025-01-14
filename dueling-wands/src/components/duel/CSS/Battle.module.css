@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
 .user,
 .opponent {
   gap: 10px;
@@ -9,6 +7,7 @@
   padding: 25px;
   box-sizing: border-box;
 }
+
 .hud {
   gap: 25px;
   width: 100%;
@@ -22,11 +21,10 @@
 .gameHeader {
   font-size: 48px;
   color: #fdac00;
-  text-shadow: 0px 0px 5px #7f0000;
   font-family: 'Press Start 2P', cursive;
 }
-.summary {
-  display: flex;
+
+.user .summary {
   align-items: flex-end;
   justify-content: flex-start;
 }
@@ -122,4 +120,26 @@
   100% {
     opacity: 0;
   }
+}
+
+/* Conteneur principal pour les résumés des joueurs */
+.summaryContainer {
+  display: flex;
+  justify-content: space-between;  /* Espacement égal entre les joueurs */
+  align-items: center;  /* Aligne les éléments verticalement */
+  width: 100%;
+  margin-top: 2rem;
+}
+
+/* Ajuster les résumés pour les positionner correctement */
+.summary {
+  display: flex;
+  flex-direction: column;  /* Organise les informations du joueur en colonne */
+  align-items: center;  /* Centrer le contenu */
+  text-align: center;
+}
+
+/* S'assurer que les informations des joueurs soient correctement alignées */
+.user, .opponent {
+  flex: 1;  /* Permet aux éléments d'occuper un espace égal */
 }

@@ -1,0 +1,73 @@
+/* MagicRoomCreation.module.css */
+
+/* Conteneur principal */
+.container {
+    background-color: #f4f4f4; /* Fond gris clair pour un aspect moderne */
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Ombre subtile */
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  /* Titre principal */
+  h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #3f3d56; /* Gris profond pour un côté classe */
+    font-family: 'Georgia', serif; /* Police Harry Potter-esque */
+    letter-spacing: 2px;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Section avec du texte et bouton pour générer et rejoindre le tournoi */
+  .section {
+    background-color: #fff;
+    border: 1px solid #dedede;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+  }
+  
+  p {
+    font-size: 1.2rem;
+    color: #444; /* Couleur claire mais lisible */
+  }
+  
+  b {
+    font-weight: bold;
+    color: #007aff; /* Bleu magique, pour rappeler Apple */
+  }
+
+  /* Style pour le champ input */
+  input {
+    width: 50%;
+    padding: 1rem;
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+  
+  /* Section du propriétaire du tournoi */
+  .tournamentOwnerSection {
+    text-align: center;
+    margin-top: 2rem;
+  }
+  
+  .tournamentOwnerSection button {
+    width: 60%;
+    margin: 0 auto;
+    font-size: 1.2rem;
+    padding: 1.2rem;
+    background-color: #f39c12; /* Or pour un effet magique */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .tournamentOwnerSection button:hover {
+    background-color: #e67e22;
+    transform: scale(1.05);
+  }
+  
