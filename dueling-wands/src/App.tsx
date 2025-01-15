@@ -20,9 +20,6 @@ import {Grimoire} from "./pages/Grimoire.tsx";
 import {Profile} from "./pages/Profile.tsx";
 import {Tournament} from "./pages/Tournament.tsx";
 import { update_user, logout_user } from "./slices/userSlice.ts";
-import { Duel } from "./pages/Duel.tsx";
-import { PersistGate } from "redux-persist/integration/react";
-import IUser from './types/IUser';
 
 interface DecodedToken {
     sub: string;
@@ -42,8 +39,8 @@ function ProtectedApp() {
         // Token invalide ou manquant
         if (!token || !isTokenValid(token)) {
             dispatch(logout_user());
-            alert("You have been logged out for security reasons (token expired)")
-            navigate("/signin");
+            // alert("You have been logged out for security reasons (token expired)")
+            // navigate("/signin");
             console.log("Token KO - Navigation connectée refusée")
         } else {
             const decoded : DecodedToken = jwtDecode(token);
@@ -61,18 +58,21 @@ function ProtectedApp() {
             }
             console.log("Token OK - Navigation connectée autorisée")
         }
-    }, [dispatch, navigate]);
+    }, [navigate]);
 
     // Gestion de la déconnexion
     const handleLogout = () => {
-        Cookies.remove('user');
+        Cookies.remove('access_token');
+        setTokenUserName("")
         dispatch(logout_user());
         navigate("/");
       };
 
-      // Gestion de l'autorisation des routes 
+    // Gestion de l'autorisation des routes 
     function PrivateRoute({ children, user }) {
-        return user && tokenUserName === user.firstName ? children : <Navigate to="/signin" />;
+        const token = Cookies.get("access_token");
+        //console.log("Token : " + token)
+        return token ? children : <Navigate to="/signin" />;
     }
 
     return (
@@ -80,17 +80,18 @@ function ProtectedApp() {
         <header>
             {/* Barre de navigation */}
             <nav>
-                {user && tokenUserName === user.firstName ? (
+                {/* {user && tokenUserName === user.firstName ? ( */}
+                {tokenUserName != "" ? (
                     <>
                         <NavLink to="/tournament" className={({ isActive }) => (isActive ? "isActive" : "")}>
                             Tournament
                         </NavLink>
-                        <NavLink to="/history" className={({ isActive }) => (isActive ? "isActive" : "")}>
+                        {/* <NavLink to="/history" className={({ isActive }) => (isActive ? "isActive" : "")}>
                             Duels History
-                        </NavLink>
-                        <NavLink to="/market" className={({ isActive }) => (isActive ? "isActive" : "")}>
+                        </NavLink> */}
+                        {/* <NavLink to="/market" className={({ isActive }) => (isActive ? "isActive" : "")}>
                             Market
-                        </NavLink>
+                        </NavLink> */}
                         <NavLink to="/grimoire" className={({ isActive }) => (isActive ? "isActive" : "")}>
                             Spell Grimoire
                         </NavLink>

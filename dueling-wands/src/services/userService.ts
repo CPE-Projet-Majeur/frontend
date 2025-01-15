@@ -42,16 +42,16 @@ export const register = async (user: IUser): Promise<Ilogin> => {
  * @param password Mot de passe
  * @returns Promise Une promesse contenant l'ID de l'utilisateur
  */
-export const login = async (username: string, password: string): Promise<Ilogin> => {
+export const login = async (login: string, password: string): Promise<Ilogin> => {
     const url: string = base_url+"/login";
-    console.log("try to request for login : ", username, password);
+    console.log("try to request for login : ", login, password);
 
     const response = await fetch(url, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ login, password }),
     });
 
     if (!response.ok) {
@@ -61,7 +61,7 @@ export const login = async (username: string, password: string): Promise<Ilogin>
 };
 
 export const fetchUserByName = async (userName: string): Promise<IUser> => {
-    const url: string = base_url+"/user/username/"+userName;
+    const url: string = base_url+"/user/login/"+userName;
 
     const response = await fetch(url, {
         method: "GET",

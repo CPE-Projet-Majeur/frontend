@@ -4,9 +4,14 @@ import { StartMenu } from '../components/Duel/StartMenu.tsx';
 import styles from "./CSS/duel.module.css"
 import { Socket } from 'socket.io-client';
 import { ESocket } from '../types/ESocket.ts';
+import { EWeather } from '../types/EWeather.ts';
+import IUser from '../types/IUser.ts';
 
 interface IProps {
     socket : Socket,
+    battleId : number,
+    weather : EWeather,
+    players : IUser[],
 }
 
 export const Duel = (props : IProps) => {
@@ -19,8 +24,6 @@ export const Duel = (props : IProps) => {
             console.log("Chaussette absente")
             return;
         }
-        //socket.on(ESocket) {};// Continuer ici, réévaluer les évenements socket
-
     }, [socket]);
 
     return (
@@ -33,7 +36,7 @@ export const Duel = (props : IProps) => {
             )}
             {mode === 'battle' && (
                 <div className={styles.battle}>
-                    <Battle onGameEnd={winner => {
+                    <Battle battleId={props.battleId} weather={props.weather} players={props.players} socket={socket} onGameEnd={winner => {
                         setWinner(winner);
                         setMode('gameOver');
                     }} />

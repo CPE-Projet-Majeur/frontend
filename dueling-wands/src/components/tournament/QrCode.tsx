@@ -2,7 +2,7 @@ import React from "react";
 import { QRCodeCanvas } from 'qrcode.react';
 
 interface Iprops {
-    qrdata: string;
+    qrdata: number;
 }
 
 export const QrCode = (props : Iprops) => {
@@ -12,8 +12,8 @@ export const QrCode = (props : Iprops) => {
     return (
         <div>
             <h2>Pairing</h2>
-            <p>Please scan the following QR Code to connect to your opponent</p>
-            <QRCodeCanvas value={qrdata} />
+            <p  style={{ marginBottom: '2vh' }}>Please scan the following <b>QR Code</b> to link your magic to your <b>opponent</b></p>
+            <QRCodeCanvas value={qrdata.toString()} />
         </div>
     );
     }
