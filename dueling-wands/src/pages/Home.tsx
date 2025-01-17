@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./CSS/Home.module.css";
+import styles from "./CSS/home.module.css";
 import { useNavigate } from "react-router-dom";
 
 export const Home = () => {

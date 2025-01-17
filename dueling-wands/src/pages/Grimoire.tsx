@@ -1,6 +1,6 @@
 import React from 'react';
 import '@coreui/coreui/dist/css/coreui.min.css'
-import "./CSS/grimoire.css"
+import "./CSS/Grimoire.css"
 import { CCarousel, CCarouselCaption, CCarouselItem, CImage } from '@coreui/react'
 import ISpell from '../types/ISpell';
 import { fetchAllSpells } from '../services/spellService';
