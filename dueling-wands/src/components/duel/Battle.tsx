@@ -4,56 +4,67 @@ import { BattleAnnouncer } from "./BattleAnnouncer";
 import styles from "./CSS/Battle.module.css"
 import { Socket } from "socket.io-client";
 import { ESocket } from "../../types/ESocket";
-import { BattleEndPayload, SendActionPayload, StartPayload } from "../../types/TBattle";
-import IUser from "../../types/IUser";
+import { BattleEndPayload, Player, SendActionPayload, StartPayload } from "../../types/TBattle";
 import { EWeather } from "../../types/EWeather";
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
 
 interface IProps {
-    onGameEnd,
+    onGameEnd : (winner: string) => void,
     socket : Socket,
-    players : IUser[],
+    players : Player[],
     weather : EWeather,
     battleId : number,
+    socketMobile : Socket,
 }
 
 const defaultMessage = "Message Displayer"
-const maxHealth : number = 1000;
+const maxHealth : number = 100;
 
-export const Battle = (props:IProps) => {
-    const [onGameEnd, setOnGameEnd] = useState(props.onGameEnd);
+export const   Battle = (props:IProps) => {
     const [playerHealth, setPlayerHealth] = useState (maxHealth);
     const [opponentHealth, setOpponentHealth] = useState (maxHealth);
     const [announcerMessage, setAnnouncerMessage] = useState("");
     const [playerName, setPlayerName] = useState("");
+    const [playerId, setPlayerId] = useState(-1);
     const [opponentName, setOpponentName] = useState("");
 
     let userId = useSelector((state: RootState) => state.user.user!.id);
 
-    let players : IUser[] = props.players;
+    const onGameEnd : (winner: string) => void= props.onGameEnd;
+    let players : Player[] = props.players;
     let weather : EWeather = props.weather;
     let battleId : number = props.battleId;
     const socket = props.socket;
+    const socketMobile = props.socketMobile; // to comment
+
+    const handleGameEnd = (winner: string) => {
+        if (onGameEnd) {
+            onGameEnd(winner);
+        }
+    };
 
     useEffect(() => {
         setPlayerHealth(maxHealth);
         setOpponentHealth(maxHealth);
     
-        if (players[0].id === userId) {
-            setOpponentName(players[1].login);
-            setPlayerName(players[0].login);
+        if (players[0]._id === userId) {
+            setOpponentName(players[1]._firstName);
+            setPlayerName(players[0]._firstName);
+            setPlayerId(players[0]._id);
         } else {
-            setOpponentName(players[0].login);
-            setPlayerName(players[1].login);
+            setOpponentName(players[0]._firstName);
+            setPlayerName(players[1]._firstName);
+            setPlayerId(players[1]._id);
         }
     
-        setAnnouncerMessage("Witches, warlocks, you may fight !");
+        setAnnouncerMessage("Wizards, you may fight !");
     }, [players, weather, battleId]);
     
 
     // Receive users actions ==> log + view update
-    socket.on(ESocket.BATTLE_SEND_ACTION_PAYLOAD, (data : SendActionPayload[]) => {
+    socket.on(ESocket.BATTLE_SEND_ACTION, (data : SendActionPayload[]) => {
+        console.log("Received BATTLE_SEND_ACTION");
         let newMessage : string = "";
         data.forEach(action => {
             let senderName :string = "";
@@ -81,16 +92,37 @@ export const Battle = (props:IProps) => {
     });
 
     // Game Over ==> Update view for results
-    socket.on(ESocket.BATTLE_END_PAYLOAD, (data : BattleEndPayload) => {
-        let winnerId : void = data.userId;
+    socket.on(ESocket.BATTLE_OVER, (data : BattleEndPayload) => {
+        console.log("Received BATTLE_OVER");
+        let winnerId : number = data.userId;
         let status : string = data.status;
-
-        if (userId === winnerId){
-            setOnGameEnd(playerName);
+        if (playerId === winnerId){
+            handleGameEnd(playerName);
         }else {
-            setOnGameEnd(opponentName);
+            handleGameEnd(opponentName);
         }
     });
+
+    // Simulate an emit of attack 
+    function sendAttack () {
+        const data = {
+            accuracy : 1,
+            spellId : 2, // 8 one shot pour les tests
+            battleId : battleId,
+        };
+        console.log("Try to send BATTLE_RECEIVE_ACTION --> accuracy : "+data.accuracy+ " spellId : "+ data.spellId + " battleId : "+ data.battleId + " with socket :"+socketMobile.id)
+        socketMobile.emit("BATTLE_RECEIVE_ACTION", data);
+    }
+    function oneShot () {
+        const data = {
+            accuracy : 1,
+            spellId : 8, // 8 one shot pour les tests
+            battleId : battleId,
+        };
+        console.log("Try to send BATTLE_RECEIVE_ACTION --> accuracy : "+data.accuracy+ " spellId : "+ data.spellId + " battleId : "+ data.battleId + " with socket :"+socketMobile.id)
+        socketMobile.emit("BATTLE_RECEIVE_ACTION", data);
+    }
+    // Simulate an emit of attack 
 
     return (
         <>
@@ -144,6 +176,8 @@ export const Battle = (props:IProps) => {
                     <BattleAnnouncer message={announcerMessage!=="" ? announcerMessage : defaultMessage} />
                 </div>
             </div>
+            <button onClick={sendAttack}>Send an Attack</button>
+            <button onClick={oneShot}>Send a OneShot</button>
         </>
     )
 }

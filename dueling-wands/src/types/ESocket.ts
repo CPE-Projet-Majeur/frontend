@@ -1,8 +1,11 @@
 export enum ESocket {
     //Battle
+    WAITING_ACKNOWLEDGED = "WAITING_ACKNOWLEDGED",
     BATTLE_START= "BATTLE_START",
-    BATTLE_SEND_ACTION_PAYLOAD= "BATTLE_SEND_ACTION_PAYLOAD",
-    BATTLE_END_PAYLOAD= "BATTLE_END_PAYLOAD",
+    BATTLE_SEND_ACTION= "BATTLE_SEND_ACTION",
+    BATTLE_OVER= "BATTLE_OVER",
+    BRACKET_UPDATE = 'BRACKET_UPDATE', // ?
+    UPDATE_USER_BATTLE = "UPDATE_USER_BATTLE", // ?
 
     //Tournament
     // Participants send this event when they try to join a tournament
@@ -25,4 +28,7 @@ export enum ESocket {
     TOURNAMENT_BRACKET_START = "TOURNAMENT_BRACKET_START",
     // This event is sent when the tournament is finished
     TOURNAMENT_OVER = "TOURNAMENT_OVER",
+
+    // Common
+    ERROR = "ERROR"
 }

@@ -7,10 +7,8 @@ interface IProps {
 }
 
 export const BattleAnnouncer = (props : IProps) => {
-
     const typedMessage : string = useTypedMessage(props.message);
-    console.log("Typed message :" + typedMessage);
-
+    //console.log("Typed message :" + typedMessage);
     return (
         <div className={styles.main}>
             <p className={styles.message}> {typedMessage} </p>

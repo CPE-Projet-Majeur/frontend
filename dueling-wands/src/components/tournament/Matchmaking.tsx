@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { QrCode } from './QrCode';
 import { Socket } from "socket.io-client";
-import { useDispatch } from 'react-redux';
-import { update_tournament } from '../../slices/tournamentSlice';
-import IUser from '../../types/IUser';
 import styles from './CSS/matchmaking.module.css'
-import { ESocket } from '../../types/ESocket';
-import { StartPayload } from '../../types/TBattle';
 import Tree from './Tree';
+import { EWeather } from '../../types/EWeather';
 
 interface IProps {
     battleId: number;
     tree;
+    socketMobile : Socket;
 }
 
 export const Matchmaking = (props : IProps) => {
@@ -29,17 +26,28 @@ export const Matchmaking = (props : IProps) => {
         6: { players: ['Alice', 'Eve'], winner: null }
     };
 
+    // Section ne servant que pour la simulation du tel qui scan le qr code et contacte le back
+    const socketMobile = props.socketMobile;
+    function simulateMobile () {
+        if (socketMobile) {
+            console.log("Try to emit BATTLE_WAITING")
+            const data = {battleId:battleId, weather:EWeather.WINDY};
+            socketMobile.emit("BATTLE_WAITING", data);
+        }
+    }
+    // Section ne servant que pour la simulation du tel qui scan le qr code et contacte le back
+
     return (
     <div className={styles.container}>
         {/* Affichage de l'arbre */}
         <div className={styles.treeSection}>
-            <h2>Fight Preparation</h2>
             <Tree tournamentData={mockTournamentData}/>
         </div>
         {/* Affichage du QR Code */}
         <div className={styles.qrCodeSection}>
             <QrCode qrdata={battleId} />
         </div>
+        <button onClick={simulateMobile}>Simulate Mobile</button>
     </div>
 );
 };

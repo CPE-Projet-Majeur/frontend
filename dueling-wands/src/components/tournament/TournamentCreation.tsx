@@ -98,7 +98,7 @@ export const TournamentCreation = (props : IProps) => {
             {tournamentOwner && (
                 <div className={styles.tournamentOwnerSection}>
                     <p>
-                        Witchs and wizards in the room :{" "}
+                        <b>Witches</b> and <b>Wizards</b> in the room :<b>{" "}</b>
                         {tournamentParticipants.map(participant => participant.name).join(', ')}
                     </p>
 

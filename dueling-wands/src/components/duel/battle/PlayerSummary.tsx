@@ -2,9 +2,6 @@ import React from "react";
 import {Bar} from './Bar'
 import styles from "../CSS/PlayerSummary.module.css"
 
-const red = "#821200"
-const blue = "#1953cb"
-
 interface IProps {
     isMainCharacter : boolean, // true si c'est moi, false si c'est l'adversaire
     name : string,
@@ -13,8 +10,6 @@ interface IProps {
 }
 
 export const PlayerSummary = (props : IProps) => {
-    //props.isMainCharacter = false;
-
     return (
         <div
           className={`${styles.container} ${

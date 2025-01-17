@@ -31,6 +31,7 @@ export const Tree=({ tournamentData } : TreeProps) => {
 
     return (
         <div className={styles.treeContainer}>
+            <h2>Fight Preparation</h2>
             {levels.map((matches, levelIndex) => (
                 <div key={levelIndex} className={styles.level}>
                     {matches.map((matchId, index) => {
