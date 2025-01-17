@@ -1,10 +1,15 @@
+import EHouses from "./EHouses";
+
 export default interface IUser {
-    id: number;
-    token?: string;
+    id?: number;
     login: string;
-    pwd?: string;
+    password?: string;
     firstName: string;
     lastName: string;
     email: string;
-    house?: number;
+    house: EHouses;
+    account: number;
+    wins : number;
+    defeats : number;
+    roleList : string[];
 }

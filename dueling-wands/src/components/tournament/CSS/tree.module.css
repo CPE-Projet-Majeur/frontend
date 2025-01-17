@@ -1,0 +1,69 @@
+.treeContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    padding: 20px;
+}
+
+.level {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    position: relative;
+}
+
+.match {
+    border: 2px solid #555;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: #f3f3f3;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 10vw;
+    position: relative;
+    transition: transform 0.3s ease-in-out;
+}
+
+.match:hover {
+    transform: scale(1.1);
+}
+
+.players {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.player {
+    padding: 5px;
+    background: #d0e1f9;
+    border-radius: 5px;
+}
+
+.winner {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+/* Connecteurs pyramidaux
+.connector {
+    width: 2px;
+    height: 50px;
+    background-color: #555;
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translateX(-50%);
+}
+
+.connectorHorizontal {
+    position: absolute;
+    height: 2px;
+    background-color: #555;
+    top: 100%;
+    left: 50%;
+    width: calc(100% + 20px);
+    transform: translateX(-50%);
+} */

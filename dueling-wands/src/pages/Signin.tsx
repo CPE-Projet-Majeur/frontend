@@ -1,5 +1,5 @@
 /**
- * @author Evann Nalewajek
+ * @author Thibault Berthet
  */
 
 import React, { useState } from "react";
@@ -18,19 +18,20 @@ export const SignIn = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const handleLogin = async (event: React.FormEvent) => {
-        event.preventDefault();
+    const handleLogin = async (e: React.FormEvent) => {
+        e.preventDefault();
         setError(null);
 
         try {
             // Première requête : Authentification
             const userLogin : Ilogin = await login(username, password);
-            console.log(`Utilisateur authentifié avec l'ID : ${userLogin.userId}`);
+            console.log("Données de connexion récupérées :", userLogin);
+            console.log(`Utilisateur authentifié avec l'ID : ${userLogin.user.id}`);
 
-            // Deuxième requête : Récupération des informations utilisateur
-            const user: IUser = await fetchUserById(userLogin.userId);
-            console.log("Données utilisateur récupérées :", user);
-
+            // // Deuxième requête : Récupération des informations utilisateur
+            // const user: IUser = await fetchUserById(userLogin.user.id);
+            // console.log("Données utilisateur récupérées :", user);
+            const user : IUser = userLogin.user;
             // Gestion du Token, mise dans les cookies
             manageCookies(userLogin.token);
 

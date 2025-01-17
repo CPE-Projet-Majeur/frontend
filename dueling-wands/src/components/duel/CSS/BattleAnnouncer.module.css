@@ -1,0 +1,19 @@
+.main {
+    height: 100%;
+    border-radius: 10px;
+    box-sizing: border-box;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); Ombre légère */
+    background-color: #f4f4f9;
+  }
+  .message {
+    font-size: 1.5rem;       /* Taille de police du message */
+    font-weight: bold;       /* Mettre le texte en gras */
+    color: #333;           /* Couleur du texte */
+    text-align: center;      /* Centrer le texte à l'intérieur de l'élément */
+    padding: 1rem;           /* Ajouter un peu d'espace autour du texte */
+    border-radius: 10px;     /* Ajouter des bords arrondis */
+  }

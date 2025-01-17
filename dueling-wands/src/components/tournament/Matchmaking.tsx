@@ -1,27 +1,54 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { QrCode } from './QrCode';
 import { Socket } from "socket.io-client";
-import { useDispatch } from 'react-redux';
-import { update_tournament } from '../../slices/tournamentSlice';
-import IUser from '../../types/IUser';
+import styles from './CSS/matchmaking.module.css'
+import Tree from './Tree';
+import { EWeather } from '../../types/EWeather';
+import { TournamentNode } from '../../pages/Tournament';
 
-interface Iprops {
-    socket: Socket;
-    user: IUser;
+interface IProps {
+    battleId: number;
+    tree ?: Map<number, TournamentNode[]>;
+    socketMobile : Socket;
 }
 
-export const Matchmaking = (props : Iprops) => {
-    const socket = props.socket;
-    const user: IUser = props.user;
+export const Matchmaking = (props : IProps) => {
+    const tree = props.tree;
+    const battleId = props.battleId;
+    console.log("Tree : "+tree);
 
-    const dispatch = useDispatch();
-    //const tournament = await fetchTournamentByCode(generatedCode);
-    //dispatch(update_tournament({ tournament }));
+    const mockTournamentData = {
+        0: { players: ['Alice', 'Bob'], winner: 'Alice' },
+        1: { players: ['Charlie', 'David'], winner: 'Charlie' },
+        2: { players: ['Alice', 'Charlie'], winner: 'Alice' },
+        3: { players: ['Eve', 'Frank'], winner: 'Eve' },
+        4: { players: ['Grace', 'Hank'], winner: 'Grace' },
+        5: { players: ['Eve', 'Grace'], winner: 'Eve' },
+        6: { players: ['Alice', 'Eve'], winner: null }
+    };
 
-    const fightCode = 'test'; // Demander a la backend de générer un code de combat 
-                            // à envoyer au mobile.
-    return(
-    <div>
-        <QrCode qrdata={fightCode}/>
+    // Section ne servant que pour la simulation du tel qui scan le qr code et contacte le back
+    const socketMobile = props.socketMobile;
+    function simulateMobile () {
+        if (socketMobile) {
+            console.log("Try to emit BATTLE_WAITING")
+            const data = {battleId:battleId, weather:EWeather.WINDY};
+            socketMobile.emit("BATTLE_WAITING", data);
+        }
+    }
+    // Section ne servant que pour la simulation du tel qui scan le qr code et contacte le back
+
+    return (
+    <div className={styles.container}>
+        {/* Affichage de l'arbre */}
+        <div className={styles.treeSection}>
+            <Tree tournamentData={tree}/>
+        </div>
+        {/* Affichage du QR Code */}
+        <div className={styles.qrCodeSection}>
+            <QrCode qrdata={battleId} />
+        </div>
+        <button onClick={simulateMobile}>Simulate Mobile</button>
     </div>
-    );};
+);
+};

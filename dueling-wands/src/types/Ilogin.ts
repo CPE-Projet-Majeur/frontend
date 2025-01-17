@@ -1,4 +1,6 @@
+import IUser from "./IUser";
+
 export default interface Ilogin {
-    userId: number;
+    user: IUser;
     token: string;
 }

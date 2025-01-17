@@ -7,6 +7,7 @@ import { RootState } from "../store";
 import { User } from "../components/profile/User";
 import styles from "./CSS/profile.module.css";
 import React from "react";
+import { QRCodeCanvas } from "qrcode.react";
 
 export const Profile = () => {
     let submitted_user = useSelector((state: RootState) => state.user.user);
@@ -21,6 +22,7 @@ export const Profile = () => {
                             src="https://videos.pexels.com/video-files/5453622/5453622-uhd_2560_1440_24fps.mp4"
                             autoPlay
                             muted
+                            loop
                             playsInline
                         />
                     </div>
@@ -31,6 +33,7 @@ export const Profile = () => {
                             <h1 className={styles["profil-title"]}>Profile</h1>
                             <div className={styles["profil-user"]}>
                                 <User user={submitted_user} />
+                                <QRCodeCanvas value={submitted_user.id!.toString()} />
                             </div>
                         </div>
                     </div>

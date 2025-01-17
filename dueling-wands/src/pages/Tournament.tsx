@@ -1,85 +1,149 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TournamentCreation } from '../components/tournament/TournamentCreation';
 import { Matchmaking } from '../components/tournament/Matchmaking';
-import { Fight } from '../components/tournament/Fight';
-import { FightResults } from '../components/tournament/FightResult';
-import { fetchTournamentByCode } from '../services/tournamentService';
 import { RootState } from "../store.ts";
-import { useDispatch, useSelector } from 'react-redux';
 import { io, Socket } from 'socket.io-client';
-import ITournament from '../types/ITournament.ts';
-import { update_tournament } from '../slices/tournamentSlice.ts';
+import { Duel } from './Duel.tsx';
+import styles from "./CSS/tournament.module.css"
+import { ESocket } from '../types/ESocket.ts';
+import { EWeather } from '../types/EWeather.ts';
+import { Player, StartPayload } from '../types/TBattle.ts';
+import { WaitMenu } from '../components/duel/WaitMenu.tsx';
+import { useSelector } from 'react-redux';
 
-enum TOURNAMENT_CREATION {
-    TOURNAMENT_JOINED = 'TOURNAMENT_JOINED',
+let SOCKET_SERVER_URL: string;
+const dev: string = `${import.meta.env.VITE_ENV}`
+if (dev === "DEV") {
+    SOCKET_SERVER_URL = `${import.meta.env.VITE_SOCKET_URL}`
+    console.log(`${SOCKET_SERVER_URL}`)
+} else {
+    SOCKET_SERVER_URL = ""
+}
+
+export type TournamentNode ={
+    _userIds: number[],
+    _winners: number[],
+    _status: string,
+    _battleId: number,
+    _left: TournamentNode | null,
+    _right: TournamentNode | null,
+}
+
+export type BracketStartData = {
+    battleId: number;
+    userIds: number[];
+    tree: Map<number, TournamentNode[]>;
 }
 
 export const Tournament = () => {
-    let SOCKET_SERVER_URL: string;
-    const dev: string = `${import.meta.env.VITE_ENV}`
-    if (dev === "DEV") {
-        SOCKET_SERVER_URL = `${import.meta.env.VITE_SOCKET_URL}`
-    } else {
-        SOCKET_SERVER_URL = ""
-    }
 
-    const dispach = useDispatch();
-    let matchState : string = useSelector((state: RootState) => state.tournament.state);
-    let inTournament : boolean = useSelector((state: RootState) => state.tournament.tournament?.status || false);
-    let tournamentCode : string = useSelector((state: RootState) => state.tournament.tournament?.code || "");
-    let user = useSelector((state: RootState) => state.user.user!); // ⚠️ Il faudra a terme supprimer le !
+    let user = useSelector((state: RootState) => state.user.user!);
     const [socket, setSocket] = useState<Socket>();
+    const [inTournament, setInTournament] = useState<boolean>(false);
+    const [tree, setTree] = useState<Map<number, TournamentNode[]>>();
+    const [players, setPlayers] = useState<Player[]>([]);
+    const [weather, setWeather] = useState(EWeather.SUNNY);
+    const [battleId, setBattleId] = useState(-1);
+    const [inFight,setInFight] = useState(false);
+    const [wait,setWait] = useState(false);
 
     // Initialisation de la socket
     useEffect(() => {
-        const newSocket = io(SOCKET_SERVER_URL, { query: { userId: user.id, userName:user.login} });
+        const newSocket = io(SOCKET_SERVER_URL, { query: { userId: user.id, userFirstName:user.login, userLastName:user.lastName, type: "tournament"} });
         setSocket(newSocket);
 
         newSocket.on("connect", () => {
-            console.log("✅ Connected to the server");
+            console.log(`✅ Connected to the server with client socket id : ${newSocket.id}`);
         });        return () => {
             newSocket.disconnect();
         };
         
     }, [user]);
 
-    // Écoute des événements de type GAME_STARTS
-    useEffect(() => {
-        if (!socket) return;
+    if (socket){
+        // Receive the information to start a tournament
+        socket.on(ESocket.TOURNAMENT_BRACKET_START, (data : BracketStartData) => {
+            console.log("Received TOURNAMENT_BRACKET_START")
+            let battleId : number = data.battleId;
+            let userIds : number[] = data.userIds;
+            let tree : Map<number, TournamentNode[]> = data.tree;
+            setBattleId(battleId);
+            setInTournament(true);
+            setTree(tree);
 
-        // Écoute des événements uniquement de type TOURNAMENT_JOINED
-        socket.on(TOURNAMENT_CREATION.TOURNAMENT_JOINED, () => {
-            console.log('Tournament has been initialised');
-            handleTournamentInitialisation();
+            // Set usefull for the other rounds of battle in the tournament :
+            setInFight(false);
+            setWait(false);
+        })
+
+        // Receive the acknolegement, the user succesfully joined the room via the QRcode
+        socket.on(ESocket.WAITING_ACKNOWLEDGED, () => {
+            console.log("Received WAITING_ACKNOWLEDGED")
+            setWait(true);
         });
-    }, [socket]);
 
-    // Permet de fetch l'entièreté du tournoi avant de commencer les combats
-    const handleTournamentInitialisation = async () => { 
-        const tournament : ITournament = await fetchTournamentByCode(tournamentCode);
-        dispach(update_tournament({ tournament }));
-        console.log("Fetched tournament : " + tournament);
+        // Receive the Start ==> Users can start to fight
+        socket.on(ESocket.BATTLE_START, (data : StartPayload) => {
+            console.log("Received BATTLE_START : battleId : "+battleId+" - players : "+players+" - weather : "+weather);
+            setBattleId(data.battleId);
+            setPlayers(data.players);
+            setWeather(data.weather);
+            setWait(false);
+            setInFight(true);
+        });
+
+        // Receive the new version of the Tree
+        // socket.on(ESocket.TOURNAMENT_UPDATED, (data) => {
+        //     console.log("Received TOURNAMENT_UPDATED : "+ data);
+        //     setTree(data.tree);
+        // })
+
+        // Receive an error ==> User can be alerted
+        socket.on(ESocket.ERROR, (data) => {
+            alert(`Error code ${data.code}: \n${data.message}`)
+        });
     }
 
+
+    // Section temporaire pour tester les actions du mobile 
+    const [socketMobile, setSocketMobile] = useState<Socket>();
+    // Initialisation de la socket
+    useEffect(() => {
+        const newSocketMobile = io(SOCKET_SERVER_URL, { query: { userId: user.id, userFirstName:user.login, userLastName:user.lastName} });
+        setSocketMobile(newSocketMobile);
+
+        newSocketMobile.on("connect", () => {
+            console.log(`✅ Connected to the server with mobile socket id : ${newSocketMobile.id}`);
+        });        return () => {
+            newSocketMobile.disconnect();
+        };
+        
+    }, [user]);
+    // Fin de section temporaire pour testes les actions du mobile
+
     return (
-        <Fragment>
+        <div className={styles.container}>
             <h1>Tournament</h1>
-            {!inTournament  &&(
-                <div>
-                    <TournamentCreation/>
+            {!inTournament  && socket &&(
+                <div className={styles.section}>
+                    <TournamentCreation socket={socket}/>
                 </div>
             ) }
-            {inTournament && socket &&( 
-                <div>
-                    <Matchmaking socket={socket} user={user}/>
+            {inTournament && socket && socketMobile && !inFight && !wait &&(
+                <div className={styles.section}>
+                    <Matchmaking battleId={battleId} tree={tree} socketMobile={socketMobile}/>
                 </div>
             )}
-            {inTournament && matchState !== 'unset' && ( // Remettre a 'unset' quand j'aurai fini de tester
-                <div>
-                    <Fight />
-                    <FightResults />
+            {inTournament && !inFight && wait && (
+                <div className={styles.section}>
+                    <WaitMenu />
                 </div>
             )}
-        </Fragment>
+            {inTournament && socket && socketMobile && !wait && inFight &&(
+                <div className={styles.section}>
+                    <Duel battleId={battleId} weather={weather} players={players} socket={socket} socketMobile={socketMobile}/>
+                </div>
+            )}
+        </div>
     );
 };

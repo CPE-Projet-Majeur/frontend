@@ -14,9 +14,11 @@ export const manageCookies = (token : string) => {
     Cookies.set('access_token', token.toString(), { expires: 7, path: '/' }); /* secure: true Permet de n'accepter que HTTPS */
 }
 
-export const register = async (user: IUser): Promise<IUser> => {
+// registration du user, renvoie le token
+export const register = async (user: IUser): Promise<Ilogin> => {
     const url: string = base_url+"/user";
     console.log(url)
+    console.log(user)
 
     const response = await fetch(url, {
         method: "POST",
@@ -40,20 +42,38 @@ export const register = async (user: IUser): Promise<IUser> => {
  * @param password Mot de passe
  * @returns Promise Une promesse contenant l'ID de l'utilisateur
  */
-export const login = async (username: string, password: string): Promise<Ilogin> => {
-    const url: string = base_url+"/auth";
+export const login = async (login: string, password: string): Promise<Ilogin> => {
+    const url: string = base_url+"/login";
+    console.log("try to request for login : ", login, password);
 
     const response = await fetch(url, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ login, password }),
     });
 
     if (!response.ok) {
         throw new Error("Nom d'utilisateur ou mot de passe incorrect !");
     }
+    return await response.json();
+};
+
+export const fetchUserByName = async (userName: string): Promise<IUser> => {
+    const url: string = base_url+"/user/login/"+userName;
+
+    const response = await fetch(url, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error(`Erreur lors de la récupération de l'utilisateur : ${response.statusText}`);
+    }
+
     return await response.json();
 };
 
