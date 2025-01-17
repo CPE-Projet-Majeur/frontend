@@ -46,24 +46,3 @@
     font-weight: bold;
     color: #2c3e50;
 }
-
-/* Connecteurs pyramidaux
-.connector {
-    width: 2px;
-    height: 50px;
-    background-color: #555;
-    position: absolute;
-    left: 50%;
-    top: 100%;
-    transform: translateX(-50%);
-}
-
-.connectorHorizontal {
-    position: absolute;
-    height: 2px;
-    background-color: #555;
-    top: 100%;
-    left: 50%;
-    width: calc(100% + 20px);
-    transform: translateX(-50%);
-} */
