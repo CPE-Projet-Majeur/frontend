@@ -20,12 +20,27 @@ if (dev === "DEV") {
     SOCKET_SERVER_URL = ""
 }
 
+export type TournamentNode ={
+    _userIds: number[],
+    _winners: number[],
+    _status: string,
+    _battleId: number,
+    _left: TournamentNode | null,
+    _right: TournamentNode | null,
+}
+
+export type BracketStartData = {
+    battleId: number;
+    userIds: number[];
+    tree: Map<number, TournamentNode[]>;
+}
+
 export const Tournament = () => {
 
-    let user = useSelector((state: RootState) => state.user.user!); // ⚠️ Il faudra a terme supprimer le !
+    let user = useSelector((state: RootState) => state.user.user!);
     const [socket, setSocket] = useState<Socket>();
     const [inTournament, setInTournament] = useState<boolean>(false);
-    const [tree, setTree] = useState();
+    const [tree, setTree] = useState<Map<number, TournamentNode[]>>();
     const [players, setPlayers] = useState<Player[]>([]);
     const [weather, setWeather] = useState(EWeather.SUNNY);
     const [battleId, setBattleId] = useState(-1);
@@ -47,21 +62,18 @@ export const Tournament = () => {
 
     if (socket){
         // Receive the information to start a tournament
-        socket.on(ESocket.TOURNAMENT_BRACKET_START, (data) => {
+        socket.on(ESocket.TOURNAMENT_BRACKET_START, (data : BracketStartData) => {
             console.log("Received TOURNAMENT_BRACKET_START")
             let battleId : number = data.battleId;
-            let userIds : number = data.userIds;
-            let tree = data.tree;
+            let userIds : number[] = data.userIds;
+            let tree : Map<number, TournamentNode[]> = data.tree;
             setBattleId(battleId);
             setInTournament(true);
             setTree(tree);
 
-
             // Set usefull for the other rounds of battle in the tournament :
             setInFight(false);
             setWait(false);
-            //console.log("Tree : "+tree);
-            //console.log("Tournament started");
         })
 
         // Receive the acknolegement, the user succesfully joined the room via the QRcode
@@ -81,10 +93,10 @@ export const Tournament = () => {
         });
 
         // Receive the new version of the Tree
-        socket.on(ESocket.TOURNAMENT_UPDATED, (data) => {
-            console.log("Received TOURNAMENT_UPDATED : "+ data);
-            setTree(data.tree);
-        })
+        // socket.on(ESocket.TOURNAMENT_UPDATED, (data) => {
+        //     console.log("Received TOURNAMENT_UPDATED : "+ data);
+        //     setTree(data.tree);
+        // })
 
         // Receive an error ==> User can be alerted
         socket.on(ESocket.ERROR, (data) => {
@@ -112,12 +124,12 @@ export const Tournament = () => {
     return (
         <div className={styles.container}>
             <h1>Tournament</h1>
-            {!inTournament  && socket &&( // Remettre
+            {!inTournament  && socket &&(
                 <div className={styles.section}>
                     <TournamentCreation socket={socket}/>
                 </div>
             ) }
-            {inTournament && socket && socketMobile && !inFight && !wait &&( //Enlever !
+            {inTournament && socket && socketMobile && !inFight && !wait &&(
                 <div className={styles.section}>
                     <Matchmaking battleId={battleId} tree={tree} socketMobile={socketMobile}/>
                 </div>
@@ -127,7 +139,7 @@ export const Tournament = () => {
                     <WaitMenu />
                 </div>
             )}
-            {inTournament && socket && socketMobile && !wait && inFight &&( // && matchState !== 'unset'
+            {inTournament && socket && socketMobile && !wait && inFight &&(
                 <div className={styles.section}>
                     <Duel battleId={battleId} weather={weather} players={players} socket={socket} socketMobile={socketMobile}/>
                 </div>

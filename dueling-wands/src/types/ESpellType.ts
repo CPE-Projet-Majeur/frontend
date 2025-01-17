@@ -1,8 +1,8 @@
 enum ESpellTypes {
-    ATTACK = "attack",
-    DEFENCE = "defence",
-    HEAL = "heal",
-    AILMENT = "ailment"
+    ATTACK = "Attack",
+    DEFENSE = "Defense",
+    HEAL = "Heal",
+    AILMENT = "Ailment"
 }
 
 export default ESpellTypes;

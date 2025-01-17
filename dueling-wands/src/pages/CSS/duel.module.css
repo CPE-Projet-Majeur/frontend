@@ -2,7 +2,7 @@
 
 /* Conteneur principal */
 .main {
-  display: flex;
+
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -79,4 +79,14 @@
   font-weight: bold;
   color: #e70000; /* Rouge pour l'alerte */
   margin-top: 2rem;
+}
+
+.backgroundVideo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+  object-fit: cover;
+  z-index: -1;
 }

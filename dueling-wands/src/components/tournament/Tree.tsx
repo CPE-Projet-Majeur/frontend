@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styles from './CSS/tree.module.css';
+import { TournamentNode } from '../../pages/Tournament';
 
 interface Match {
     players: string[];
@@ -11,10 +12,34 @@ type TournamentTree = {
 };
 
 interface TreeProps {
-    tournamentData: TournamentTree;
+    tournamentData?: Map<number, TournamentNode[]>;
 }
 
-export const Tree=({ tournamentData } : TreeProps) => {
+function convertToMatchFormat(tree: string): TournamentTree {
+    const convertedData: TournamentTree = {};
+
+    try {
+        const parsedTree = JSON.parse(tree); // Désérialisation du premier niveau
+
+        Object.entries(parsedTree).forEach(([round, nodes]) => {
+            const parsedNodes = nodes.map((node: string) => JSON.parse(node)); // Deuxième désérialisation
+            parsedNodes.forEach((node: any, index: number) => {
+                convertedData[parseInt(round) * 100 + index] = {
+                    players: node.userId.map((id: number) => `Player ${id}`),
+                    winner: node.winners.length > 0 ? `Player ${node.winners[0]}` : null
+                };
+            });
+        });
+    } catch (error) {
+        console.error("Erreur de parsing du tournoi:", error);
+    }
+
+    return convertedData;
+}
+
+
+export const Tree = (props: TreeProps) => {
+    const tournamentData = convertToMatchFormat(props.tournamentData as unknown as string);
 
     if (!tournamentData) {
         return (<div className={styles.treeContainer}><p>No tournament data available</p></div>);
@@ -23,7 +48,7 @@ export const Tree=({ tournamentData } : TreeProps) => {
     const levels: string[][] = [];
 
     // Construction des niveaux de l'arbre
-    Object.entries(tournamentData).forEach(([matchId, match]) => {
+    Object.entries(tournamentData).forEach(([matchId]) => {
         const level = Math.floor(Math.log2(parseInt(matchId) + 1));
         if (!levels[level]) levels[level] = [];
         levels[level].push(matchId);
@@ -34,7 +59,7 @@ export const Tree=({ tournamentData } : TreeProps) => {
             <h2>Fight Preparation</h2>
             {levels.map((matches, levelIndex) => (
                 <div key={levelIndex} className={styles.level}>
-                    {matches.map((matchId, index) => {
+                    {matches.map((matchId) => {
                         const match = tournamentData[parseInt(matchId)];
                         return (
                             <div key={matchId} className={styles.match}>
@@ -44,18 +69,8 @@ export const Tree=({ tournamentData } : TreeProps) => {
                                     ))}
                                 </div>
                                 <div className={styles.winner}>
-                                    <p>Winner<br/>{match.winner || '-'}</p>
+                                    <p>Winner: {match.winner || '-'}</p>
                                 </div>
-                                {/* Connecteurs pyramidaux */}
-                                {levelIndex < levels.length - 1 && (
-                                    <>
-                                        <div className={styles.connector}></div>
-                                        {/* Ligne horizontale si deux duels côte à côte */}
-                                        {index % 2 === 0 && (
-                                            <div className={styles.connectorHorizontal}></div>
-                                        )}
-                                    </>
-                                )}
                             </div>
                         );
                     })}
@@ -64,5 +79,6 @@ export const Tree=({ tournamentData } : TreeProps) => {
         </div>
     );
 };
+
 
 export default Tree;

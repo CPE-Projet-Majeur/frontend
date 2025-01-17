@@ -1,9 +1,9 @@
 enum ESpellAffinities {
-    FIRE = "fire",
-    WATER = "water",
-    WIND = "wind",
-    ICE = "ice",
-    NEUTRAL = "neutral",
+    FIRE = "Fire",
+    WATER = "Water",
+    WIND = "Wind",
+    ICE = "Ice",
+    NEUTRAL = "Neutral",
 }
 
 export default ESpellAffinities;

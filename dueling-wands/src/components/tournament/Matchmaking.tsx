@@ -4,17 +4,18 @@ import { Socket } from "socket.io-client";
 import styles from './CSS/matchmaking.module.css'
 import Tree from './Tree';
 import { EWeather } from '../../types/EWeather';
+import { TournamentNode } from '../../pages/Tournament';
 
 interface IProps {
     battleId: number;
-    tree;
+    tree ?: Map<number, TournamentNode[]>;
     socketMobile : Socket;
 }
 
 export const Matchmaking = (props : IProps) => {
     const tree = props.tree;
     const battleId = props.battleId;
-    console.log("Battle ID : "+battleId);
+    console.log("Tree : "+tree);
 
     const mockTournamentData = {
         0: { players: ['Alice', 'Bob'], winner: 'Alice' },
@@ -41,7 +42,7 @@ export const Matchmaking = (props : IProps) => {
     <div className={styles.container}>
         {/* Affichage de l'arbre */}
         <div className={styles.treeSection}>
-            <Tree tournamentData={mockTournamentData}/>
+            <Tree tournamentData={tree}/>
         </div>
         {/* Affichage du QR Code */}
         <div className={styles.qrCodeSection}>

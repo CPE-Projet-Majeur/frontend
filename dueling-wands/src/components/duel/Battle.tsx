@@ -26,12 +26,11 @@ export const   Battle = (props:IProps) => {
     const [opponentHealth, setOpponentHealth] = useState (maxHealth);
     const [announcerMessage, setAnnouncerMessage] = useState("");
     const [playerName, setPlayerName] = useState("");
-    const [playerId, setPlayerId] = useState(-1);
     const [opponentName, setOpponentName] = useState("");
 
     let userId = useSelector((state: RootState) => state.user.user!.id);
 
-    const onGameEnd : (winner: string) => void= props.onGameEnd;
+    const setWinner : (winner: string) => void= props.onGameEnd;
     let players : Player[] = props.players;
     let weather : EWeather = props.weather;
     let battleId : number = props.battleId;
@@ -39,9 +38,7 @@ export const   Battle = (props:IProps) => {
     const socketMobile = props.socketMobile; // to comment
 
     const handleGameEnd = (winner: string) => {
-        if (onGameEnd) {
-            onGameEnd(winner);
-        }
+        setWinner(winner);
     };
 
     useEffect(() => {
@@ -51,11 +48,9 @@ export const   Battle = (props:IProps) => {
         if (players[0]._id === userId) {
             setOpponentName(players[1]._firstName);
             setPlayerName(players[0]._firstName);
-            setPlayerId(players[0]._id);
         } else {
             setOpponentName(players[0]._firstName);
             setPlayerName(players[1]._firstName);
-            setPlayerId(players[1]._id);
         }
     
         setAnnouncerMessage("Wizards, you may fight !");
@@ -93,10 +88,10 @@ export const   Battle = (props:IProps) => {
 
     // Game Over ==> Update view for results
     socket.on(ESocket.BATTLE_OVER, (data : BattleEndPayload) => {
-        console.log("Received BATTLE_OVER");
+        console.log(`Received BATTLE_OVER winner has id : ${data.userId} and status : ${data.status}`);
         let winnerId : number = data.userId;
         let status : string = data.status;
-        if (playerId === winnerId){
+        if (status === "won"){
             handleGameEnd(playerName);
         }else {
             handleGameEnd(opponentName);
@@ -126,25 +121,25 @@ export const   Battle = (props:IProps) => {
 
     return (
         <>
-            <h2 className={styles.gameHeader}>{playerName} VS {opponentName}</h2>
+            {/* <h2 className={styles.gameHeader}>{playerName} VS {opponentName}</h2> */}
             <div className={styles.summaryContainer}>
+            <div className={styles.user}>
+                    <div className={styles.summary}>
+                    <PlayerSummary 
+                        isMainCharacter={true} 
+                        health={playerHealth}
+                        name={playerName}
+                        maxHealth={maxHealth}
+                    />
+                    </div>
+                </div>
+                <h2>VS</h2>
                 <div className={styles.opponent}>
                     <div className={styles.summary}>
                     <PlayerSummary 
                         isMainCharacter={false} 
                         health={opponentHealth}
                         name={opponentName}
-                        maxHealth={maxHealth}
-                    />
-                    </div>
-                </div>
-
-                <div className={styles.user}>
-                    <div className={styles.summary}>
-                    <PlayerSummary 
-                        isMainCharacter={true} 
-                        health={playerHealth}
-                        name={playerName}
                         maxHealth={maxHealth}
                     />
                     </div>
