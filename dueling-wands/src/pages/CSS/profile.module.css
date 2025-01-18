@@ -5,13 +5,14 @@
     align-items: center;
     background-color: #f5f5f7; /* Couleur de fond neutre */
     margin: 0;
+    height: calc(100vh - 2rem);
 }
 
 /* Conteneur vidéo */
 .video-container {
     position: relative;
     width: 100vw; /* Occupe toute la largeur de l'écran */
-    height: 95vh; /* Occupe toute la hauteur de l'écran */
+    height: calc(100vh - 2rem);
     overflow: hidden;
     border-radius: 0; /* Supprime les bordures arrondies */
 }

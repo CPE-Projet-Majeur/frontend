@@ -16,9 +16,8 @@ export const manageCookies = (token : string) => {
 
 // registration du user, renvoie le token
 export const register = async (user: IUser): Promise<Ilogin> => {
-    const url: string = base_url+"/user";
-    console.log(url)
-    console.log(user)
+    const url: string = base_url+"/users";
+    console.log(`Payload ${user} sent to ${url}`);
 
     const response = await fetch(url, {
         method: "POST",
@@ -61,7 +60,7 @@ export const login = async (login: string, password: string): Promise<Ilogin> =>
 };
 
 export const fetchUserByName = async (userName: string): Promise<IUser> => {
-    const url: string = base_url+"/user/login/"+userName;
+    const url: string = base_url+"/users/login/"+userName;
 
     const response = await fetch(url, {
         method: "GET",

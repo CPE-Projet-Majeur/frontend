@@ -1,145 +1,103 @@
-.user,
-.opponent {
-  gap: 10px;
+/* BattleArena.module.css */
+
+/* Conteneur principal pour le résumé des joueurs */
+.summary-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 2rem;
+  padding: 1rem;
+  gap: 2rem;
+  box-sizing: border-box;
+}
+
+/* Résumé du joueur ou de l'adversaire */
+.player-summary {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  padding: 25px;
-  box-sizing: border-box;
+  align-items: center;
+  text-align: center;
+  flex: 1;
+  gap: 1rem;
 }
 
-.hud {
-  gap: 25px;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-}
-.hudChild {
-  flex: 1;
-  height: 200px;
-}
-.gameHeader {
-  font-size: 48px;
+/* Titre principal */
+.vs-title {
+  font-size: 2rem;
   color: #fdac00;
   font-family: 'Press Start 2P', cursive;
+  margin: 0;
 }
 
-.user .summary {
-  align-items: flex-end;
-  justify-content: flex-start;
-}
-.opponent .summary {
-  align-items: flex-start;
-  justify-content: flex-end;
-}
-.characters {
-  width: 100%;
-  text-align: center;
-}
-.gameImages {
+/* Conteneur des personnages */
+.characters-container {
   display: flex;
   justify-content: space-between;
-  padding: 25px;
+  align-items: center;
+  padding: 2rem;
+  gap: 2rem;
   box-sizing: border-box;
 }
 
-.characters .gameImages img {
+/* Sprite des personnages */
+.character-sprite {
   max-height: 25vh;
   min-height: 150px;
+  transition: 0.5s ease;
 }
 
-.static {
-  transform: translateX(0px);
-  transform: translateY(0px);
-  transition: 0.5s;
-}
-
-.playerSprite .attack {
+/* Animation d'attaque */
+.character-sprite.attack {
   transition: 0.1s;
   transform: translateX(100px);
 }
-.opponentSprite .attack {
-  transition: 0.1s;
+
+.opponent-sprite.attack {
   transform: translateX(-100px);
 }
 
-.magic {
-  transition: 0.2s;
-  transform: translateY(-25px);
-  animation: shake 0.5s infinite;
-}
-
-.damage {
-  opacity: 1;
-  animation: flash 0.3s 0.3s infinite;
-}
-
-@keyframes shake {
-  0% {
-    transform: translate(1px, 1px) rotate(0deg) translateY(-25px);
-  }
-  10% {
-    transform: translate(-1px, -2px) rotate(-1deg) translateY(-25px);
-  }
-  20% {
-    transform: translate(-3px, 0px) rotate(1deg) translateY(-25px);
-  }
-  30% {
-    transform: translate(3px, 2px) rotate(0deg) translateY(-25px);
-  }
-  40% {
-    transform: translate(1px, -1px) rotate(1deg) translateY(-25px);
-  }
-  50% {
-    transform: translate(-1px, 2px) rotate(-1deg) translateY(-25px);
-  }
-  60% {
-    transform: translate(-3px, 1px) rotate(0deg) translateY(-25px);
-  }
-  70% {
-    transform: translate(3px, 1px) rotate(-1deg) translateY(-25px);
-  }
-  80% {
-    transform: translate(-1px, -1px) rotate(1deg) translateY(-25px);
-  }
-  90% {
-    transform: translate(1px, 2px) rotate(0deg) translateY(-25px);
-  }
-  100% {
-    transform: translate(1px, -2px) rotate(-1deg) translateY(-25px);
-  }
-}
-
-@keyframes flash {
-  0% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-/* Conteneur principal pour les résumés des joueurs */
-.summaryContainer {
-  display: flex;
-  justify-content: space-between;  /* Espacement égal entre les joueurs */
-  align-items: center;  /* Aligne les éléments verticalement */
+/* HUD et annonces */
+.hud-container {
   width: 100%;
-  margin-top: 2rem;
-}
-
-/* Ajuster les résumés pour les positionner correctement */
-.summary {
+  margin-top: 1.5rem;
   display: flex;
-  flex-direction: column;  /* Organise les informations du joueur en colonne */
-  align-items: center;  /* Centrer le contenu */
-  text-align: center;
+  justify-content: center;
 }
 
-/* S'assurer que les informations des joueurs soient correctement alignées */
-.user, .opponent {
-  flex: 1;  /* Permet aux éléments d'occuper un espace égal */
+.hud-message {
+  width: 100%;
+  max-width: 96%;
+  padding: 1rem;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Boutons d'attaque */
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.action-button {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  background-color: #007aff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.action-button:hover {
+  transform: scale(1.05);
+  background-color: #005bb5;
 }

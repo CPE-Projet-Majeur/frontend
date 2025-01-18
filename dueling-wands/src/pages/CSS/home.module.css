@@ -1,32 +1,38 @@
 /* Conteneur global de la page */
 .home-container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
-    background-color: #f5f5f7;
+    background-color: var(--primary-color);
     margin: 0;
-    overflow-y: hidden;
+    padding: 0;
+    width: 100vw;
+    /* height: 100vh; */
+    overflow: hidden; /* Évite les barres de défilement */
 }
 
 /* Conteneur vidéo */
 .video-container {
     position: relative;
-    width: 100vw; /* Occupe toute la largeur de l'écran */
-    height: 95vh; /* Occupe toute la hauteur de l'écran */
-    overflow: hidden;
-    border-radius: 0; /* Supprime les bordures arrondies */
+    width: 100vw;
+    height: calc(100vh - 2rem); /* Ajuste pour inclure la hauteur exacte du header */
+    overflow: hidden; /* Évite les débordements */
 }
 
 /* Style de la vidéo */
 .video-container video {
-    width: 100%; /* Vidéo en largeur totale */
-    height: 100%; /* Hauteur totale */
-    object-fit: cover; /* La vidéo couvre l'espace sans déformation */
-    display: block;
-    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; /* La vidéo occupe toute la largeur */
+    height: 100%; /* La vidéo occupe toute la hauteur */
+    object-fit: cover; /* S'adapte au conteneur sans déformation */
+    z-index: 1; /* Derrière tout */
 }
 
-/* Overlay pour le bouton */
+
+/* Overlay pour le bouton ou autre contenu */
 .overlay {
     position: absolute;
     top: 0;
@@ -36,8 +42,36 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(0, 0, 0, 0.4); /* Fond semi-transparent */
+    background: rgba(0, 0, 0, 0.2); /* Fond semi-transparent */
     pointer-events: none;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Animation de fondu */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+/* Overlay pour le bouton */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 140vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background: rgba(0, 0, 0, 0.2); Fond semi-transparent */
+    pointer-events: none;
+    animation: fadeIn 1.5s ease-in-out;
+    z-index: 10;
 }
 
 /* Style du bouton */

@@ -2,12 +2,10 @@
 
 /* Conteneur principal */
 .main {
-
   justify-content: center;
   align-items: center;
   flex-direction: column;
   background-color: #f8f8f8; /* Couleur de fond douce */
-  padding: 2rem;
   font-family: 'Georgia', serif; /* Police magique */
   color: #3f3d56; /* Gris profond */
   text-align: center;
@@ -46,7 +44,6 @@
 /* Battle */
 .battle {
   background-color: #fff;
-  padding: 3rem;
   border-radius: 15px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   width: 100%;
@@ -75,11 +72,57 @@
 
 /* Game Over */
 .gameOver {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #e70000; /* Rouge pour l'alerte */
-  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.8); /* Fond sombre pour une ambiance dramatique */
+  color: #ffffff; /* Texte blanc pour le contraste */
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5); /* Effet d'élévation subtile */
+  max-width: 600px;
+  margin: 2rem auto; /* Centrage automatique */
+  animation: fadeIn 1s ease-in-out; /* Animation douce à l'apparition */
 }
+
+/* Texte principal */
+.gameOver p {
+  font-size: 1.5rem; /* Taille du texte pour une meilleure lisibilité */
+  margin: 0.5rem 0;
+  font-family: 'Georgia', serif; /* Police élégante */
+  color: #f8d64e; /* Doré pour un effet "victoire" */
+}
+
+/* Nom du gagnant en gras et coloré */
+.gameOver b {
+  color: #4caf50; /* Vert pour symboliser le succès */
+  font-weight: bold;
+  font-size: 1.7rem; /* Légèrement plus grand pour ressortir */
+}
+
+/* Image du vainqueur */
+.gameOver img {
+  margin-top: 1.5rem;
+  max-width: 100%; /* S'adapte à la taille du conteneur */
+  height: auto;
+  border-radius: 10px; /* Coins arrondis pour une apparence soignée */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); /* Ombre pour la profondeur */
+}
+
+/* Animation d'apparition */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: scale(0.9);
+  }
+  to {
+      opacity: 1;
+      transform: scale(1);
+  }
+}
+
 
 .backgroundVideo {
   position: absolute;

@@ -81,7 +81,7 @@ export const   Battle = (props:IProps) => {
             }
             
             newMessage = newMessage + `\n${senderName} used ${spellName} against ${receiverName} with ${accuracy }% accuracy`
-            newMessage = newMessage + `\n${receiverName} suffered ${damage} damages, they now have ${remainingHp}HP remaining`
+            newMessage = newMessage + `\n${receiverName} suffered ${damage} damages, they now have ${remainingHp} HP remaining\n`
         })
         setAnnouncerMessage(newMessage);
     });
@@ -121,58 +121,68 @@ export const   Battle = (props:IProps) => {
 
     return (
         <>
-            {/* <h2 className={styles.gameHeader}>{playerName} VS {opponentName}</h2> */}
-            <div className={styles.summaryContainer}>
-            <div className={styles.user}>
-                    <div className={styles.summary}>
-                    <PlayerSummary 
-                        isMainCharacter={true} 
+            {/* Résumé des joueurs */}
+            <div className={styles["summary-container"]}>
+                <div className={styles["player-summary"]}>
+                    <PlayerSummary
+                        isMainCharacter={true}
                         health={playerHealth}
                         name={playerName}
                         maxHealth={maxHealth}
                     />
-                    </div>
                 </div>
-                <h2>VS</h2>
-                <div className={styles.opponent}>
-                    <div className={styles.summary}>
-                    <PlayerSummary 
-                        isMainCharacter={false} 
+
+                <h2 className={styles["vs-title"]}>VS</h2>
+
+                <div className={styles["player-summary"]}>
+                    <PlayerSummary
+                        isMainCharacter={false}
                         health={opponentHealth}
                         name={opponentName}
                         maxHealth={maxHealth}
                     />
-                    </div>
                 </div>
             </div>
 
+            {/* Personnages et animations */}
+            <div className={styles["characters-container"]}>
+                <img
+                    className={`${styles["character-sprite"]} ${styles["player-sprite"]}`}
+                    src="https://e7.pngegg.com/pngimages/248/179/png-clipart-kakaotalk-kakao-friends-emoticon-character-gargamel-hand-fictional-character-thumbnail.png"
+                    alt={playerName}
+                />
 
-            <div className= {styles.characters}>
-                <div className={styles.gameImages}>
-                    <div className={styles.playerSprite}>
-                        <img 
-                            src={"https://e7.pngegg.com/pngimages/248/179/png-clipart-kakaotalk-kakao-friends-emoticon-character-gargamel-hand-fictional-character-thumbnail.png"}
-                            alt={playerName}
-                            //className={styles[playerAnimation]}
-                        />
-                    </div>
-                    <div className={styles.opponentSprite}>
-                    <img 
-                            src={"https://e7.pngegg.com/pngimages/699/594/png-clipart-smurf-male-character-illustration-gargamel-the-smurfs-azrael-smurfette-brainy-smurf-smurfs-hand-fictional-character-thumbnail.png"}
-                            alt={opponentName}
-                            //className={styles[opponentAnimation]}
-                        />
-                    </div>
+                <img
+                    className={`${styles["character-sprite"]} ${styles["opponent-sprite"]}`}
+                    src="https://e7.pngegg.com/pngimages/699/594/png-clipart-smurf-male-character-illustration-gargamel-the-smurfs-azrael-smurfette-brainy-smurf-smurfs-hand-fictional-character-thumbnail.png"
+                    alt={opponentName}
+                />
+            </div>
+
+            {/* HUD pour les messages */}
+            <div className={styles["hud-container"]}>
+                <div className={styles["hud-message"]}>
+                    <BattleAnnouncer
+                        message={announcerMessage !== "" ? announcerMessage : defaultMessage}
+                    />
                 </div>
             </div>
 
-            <div className={styles.hud}>
-                <div className={styles.hudChild}>
-                    <BattleAnnouncer message={announcerMessage!=="" ? announcerMessage : defaultMessage} />
-                </div>
+            {/* Boutons d'actions */}
+            <div className={styles["action-buttons"]}>
+                <button
+                    className={styles["action-button"]}
+                    onClick={sendAttack}
+                >
+                    Send an Attack
+                </button>
+                <button
+                    className={styles["action-button"]}
+                    onClick={oneShot}
+                >
+                    Send a OneShot
+                </button>
             </div>
-            <button onClick={sendAttack}>Send an Attack</button>
-            <button onClick={oneShot}>Send a OneShot</button>
         </>
-    )
-}
+    );
+};

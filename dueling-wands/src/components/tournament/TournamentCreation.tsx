@@ -1,7 +1,6 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchTournamentCode, joinRoom, startTournament } from '../../services/tournamentService';
-import { set_tournament_code, set_owner_id } from '../../slices/tournamentSlice';
+import { set_owner_id } from '../../slices/tournamentSlice';
 import { RootState } from '../../store';
 import styles from "./CSS/tournamentCreation.module.css"
 import { Socket } from 'socket.io-client';
@@ -19,6 +18,7 @@ type TournamentParticipant = {
 export const TournamentCreation = (props : IProps) => {
     const dispatch = useDispatch();
     const socket = props.socket;
+    const ownerName : string = useSelector((state: RootState) => state.user.user?.login || "");
     const ownerId : number = useSelector((state: RootState) => state.user.user?.id || -1);
     const [generatedCode, setGeneratedCode] = useState<string>("");
     const [friendCode, setFriendCode] = useState<string>("");
@@ -26,6 +26,7 @@ export const TournamentCreation = (props : IProps) => {
     const [tournamentOwner, setTournamentOwner] = useState<boolean>(false);
     const [tournamentId, setTournamentId] = useState<number>(-1);
     const [tournamentParticipants, setTournamentParticipants] = useState<TournamentParticipant[]>([]);
+    const [tournamentName, setTournamentName] = useState<string>("");
 
     // ----------- Manage Socket Reception ----------- //
 
@@ -47,15 +48,20 @@ export const TournamentCreation = (props : IProps) => {
         let tournamentParticipantsList = data.tournamentParticipants;
         console.log("Tournament list : "+tournamentParticipantsList)
         setTournamentId(tournamentId);
+        setTournamentName(tournamentName);
         setTournamentParticipants(tournamentParticipantsList);
         setRoomOk(0);
     });
 
     // Ask for a Tournament code generation - OK
     function generateTournamentCode () {
-        const data = "Nom random";
-        console.log("Try to emit TOURNAMENT_CREATION : "+data);
-        socket.emit(ESocket.TOURNAMENT_CREATION, data);
+        if (tournamentName === "" ) alert("Please provide a Tournament Name");
+        else {
+            const data = tournamentName;
+            setTournamentParticipants([{name : ownerName, id : ownerId}]);
+            console.log("Try to emit TOURNAMENT_CREATION : "+data);
+            socket.emit(ESocket.TOURNAMENT_CREATION, data);
+        }
     }
 
     // Ask to join a tournament - OK
@@ -72,38 +78,77 @@ export const TournamentCreation = (props : IProps) => {
         socket.emit(ESocket.TOURNAMENT_START, data)
     }
 
-    return(
-        <div className={styles.container}>
-            <h2>Magic Room Creation</h2>
-            {roomOk!==0 && (
-                <div className={styles.section}>
-                    <p>Generate a <b>Tournament Code</b> to share with your friends</p>
-                    {generatedCode && <p>Room Code : {generatedCode}</p>}
-                    <button onClick={generateTournamentCode}> Generate </button>
-                    <p>Write your friend's <b>Tournament Code</b> to take part !</p>
+    return (
+        <div className={styles["magic-room-container"]}>
+            <h2 className={styles["magic-room-title"]}>Magic Room Creation</h2>
+
+            {roomOk !== 0 && (
+                <div className={styles["magic-room-section"]}>
                     <input
+                        className={styles["magic-room-input"]}
                         type="text"
-                        placeholder="Friend's Code"
-                        value={friendCode}
-                        onChange={(e) => setFriendCode(e.target.value)} 
+                        placeholder="Enter Tournament Name"
+                        
+                        onChange={(e) => setTournamentName(e.target.value)}
                     />
-                    <button onClick={joinTournament}> Join </button>
-                </div>
-            ) }
-            {roomOk===0 && tournamentParticipants && !tournamentOwner &&(
-                <div className={styles.tournamentOwnerSection}>
-                    <p>Waiting for the tournament owner to start the magic...</p>
+                    <p className={styles["magic-room-text"]}>
+                        Generate a <b>Tournament Code</b> to share with your friends
+                    </p>
+                    {generatedCode && (
+                        <p className={styles["magic-room-code"]}>Room Code: {generatedCode}</p>
+                    )}
+                    <button
+                        className={styles["magic-room-button"]}
+                        onClick={generateTournamentCode}
+                    >
+                        Generate Code
+                    </button>
+                    {!tournamentOwner && (
+                        <>
+                            <p className={styles["magic-room-text"]}>
+                                Enter your friend's <b>Tournament Code</b> to join!
+                            </p>
+                            <input
+                                className={styles["magic-room-input"]}
+                                type="text"
+                                placeholder="Friend's Tournament Code"
+                                value={friendCode}
+                                onChange={(e) => setFriendCode(e.target.value)}
+                            />
+                            <button
+                                className={styles["magic-room-button"]}
+                                onClick={joinTournament}
+                            >
+                                Join Tournament
+                            </button>
+                        </>
+                    )}
                 </div>
             )}
-            {tournamentOwner && (
-                <div className={styles.tournamentOwnerSection}>
-                    <p>
-                        <b>Witches</b> and <b>Wizards</b> in the room :<b>{" "}</b>
-                        {tournamentParticipants.map(participant => participant.name).join(', ')}
-                    </p>
 
-                    <button onClick={start}> Start the tournament </button>
+            {roomOk === 0 && tournamentParticipants && !tournamentOwner && (
+                <div className={styles["magic-room-owner-section"]}>
+                    <h2>{tournamentName}</h2>
+                    <p className={styles["magic-room-text"]}>
+                        Waiting for the <b>Tournament Owner</b> to start the magic...
+                    </p>
+                </div>
+            )}
+
+            {tournamentOwner && (
+                <div className={styles["magic-room-owner-section"]}>
+                    <p className={styles["magic-room-text"]}>
+                        <b>Wizards</b> in the room:{" "}
+                        {tournamentParticipants.map((participant) => participant.name).join(" ~ ")}
+                    </p>
+                    <button
+                        className={styles["magic-room-button"]}
+                        onClick={start}
+                    >
+                        Start the Tournament
+                    </button>
                 </div>
             )}
         </div>
-)};
+    );
+};

@@ -10,18 +10,23 @@ interface IProps {
 }
 
 export const PlayerSummary = (props : IProps) => {
-    return (
-        <div
-          className={`${styles.container} ${
+  let hp : string = `HP : ${props.health}%`; 
+
+  return (
+    <div
+        className={`${styles.container} ${
             props.isMainCharacter ? styles.mainCharacter : styles.opponent
-          }`}
-        >
-          <div className={styles.info}>
+        }`}
+    >
+        {/* Informations principales */}
+        <div className={styles.info}>
             <h3 className={styles.name}>{props.name}</h3>
-          </div>
-          <div className={styles.health}>
-            <Bar label="HP" value={props.health} maxValue={props.maxHealth} />
-          </div>
         </div>
-      );
-}
+
+        {/* Barre de santé */}
+        <div className={styles.health}>
+            <Bar label={hp} value={props.health} maxValue={props.maxHealth} />
+        </div>
+    </div>
+);
+};

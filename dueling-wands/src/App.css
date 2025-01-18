@@ -9,20 +9,30 @@
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,body {
+  height : 100%;
+  width : 100%;
+  background-color: var(--primary-color);
 }
 
 body {
+  display: flex;
+  flex-direction: column;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  margin: 0;
-  padding: 0;
   color: var(--text-color);
-  background-color: var(--secondary-color);
+  /* background-color: var(--secondary-color); */
+  background-color: var(--primary-color);
 }
 
 header {
+  display: flex;
   letter-spacing: 1px;
   background-color: var(--primary-color);
-  height:5vh;
+  height:2rem;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -30,7 +40,7 @@ header {
 }
 
 nav {
-  display: flex;
+  /* display: flex; */
   align-items: center;
   justify-content: space-between;
 }
@@ -55,8 +65,10 @@ nav a.isActive {
 }
 
 main {
+  flex:1;
   padding: 50px 20px;
   text-align: center;
+  overflow-y: auto;
 }
 
 h1 {

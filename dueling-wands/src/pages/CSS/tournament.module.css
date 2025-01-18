@@ -10,6 +10,7 @@
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Ombre subtile pour donner de la profondeur */
     max-width: 1200px;
     margin: 0 auto;
+    margin-top: 4vh;
   }
   
   /* Titre principal */
@@ -37,7 +38,6 @@
     font-size: 2.2rem;
     color: #3f3d56; /* Gris profond */
     text-align: center;
-    margin-bottom: 1.5rem;
   }
   
   /* Effet bouton élégant */
@@ -86,3 +86,6 @@
     margin-top: 1rem;
   }
   
+  .body{
+    background-color: black;
+  }
