@@ -18,30 +18,24 @@ http {
         index index.html;
 
         location /users {
-            proxy_pass http://host.docker.internal:8083;
+            proxy_pass ${USERS_API_URL};
         }
 
         location /login {
-            proxy_pass http://host.docker.internal:8083;
+            proxy_pass ${USERS_API_URL};
         }
 
         location /admin {
-            proxy_pass http://host.docker.internal:8083;
+            proxy_pass ${USERS_API_URL};
         }
 
-
-        # Define a rule for the route /my-api2
-        # Here all requests to /my-api2 are redirected to http://192.168.10.40:8888
-        # The URL is rewritten before being sent to the new server
-        # e.g if the request "/my-api2/vehicle/45" is received by Nginx
-        # the request is rewritten in "/vehicle/45" ("/my-api2" is removed) before being sent to the server http://192.168.10.40:8888
         location /spells {
-            proxy_pass http://host.docker.internal:8084;
+            proxy_pass ${SPELLS_API_URL};
         }
 
          # Proxy pour la socket batte service
         location /socket.io {
-            proxy_pass http://host.docker.internal:3000;
+            proxy_pass ${BATTLE_SOCKET_URL};
             proxy_http_version 1.1;
             proxy_set_header Upgrade $http_upgrade;
             proxy_set_header Connection "upgrade";
