@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { QrCode } from './QrCode';
 import { Socket } from "socket.io-client";
 import styles from './CSS/matchmaking.module.css'
