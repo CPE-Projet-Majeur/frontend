@@ -1,19 +1,39 @@
+/* BattleAnnouncer.module.css */
+
+/* Conteneur principal */
 .main {
-    height: 100%;
-    border-radius: 10px;
-    box-sizing: border-box;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); Ombre légère */
-    background-color: #f4f4f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: #333; /* Fond sombre et sobre */
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+/* Style pour le message */
+.message {
+  white-space: pre-line;
+  font-size: 1rem;
+  color: #f1f1f1; /* Texte clair pour contraster avec le fond sombre */
+  text-align: left;
+  font-weight: 300;
+  font-family: 'Arial', sans-serif; /* Police simple et moderne */
+  letter-spacing: 1px;
+  animation: slideIn 0.5s ease-out;
+  text-overflow: ellipsis;
+  margin-top:1rem;
+}
+
+/* Animation de l'apparition du message */
+@keyframes slideIn {
+  0% {
+      transform: translateX(-100%);
+      opacity: 0;
   }
-  .message {
-    font-size: 1.5rem;       /* Taille de police du message */
-    font-weight: bold;       /* Mettre le texte en gras */
-    color: #333;           /* Couleur du texte */
-    text-align: center;      /* Centrer le texte à l'intérieur de l'élément */
-    padding: 1rem;           /* Ajouter un peu d'espace autour du texte */
-    border-radius: 10px;     /* Ajouter des bords arrondis */
+  100% {
+      transform: translateX(0);
+      opacity: 1;
   }
+}

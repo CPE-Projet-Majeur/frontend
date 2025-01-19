@@ -1,73 +1,93 @@
 /* MagicRoomCreation.module.css */
 
 /* Conteneur principal */
-.container {
-    background-color: #f4f4f4; /* Fond gris clair pour un aspect moderne */
-    padding: 2rem;
-    border-radius: 20px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Ombre subtile */
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  /* Titre principal */
-  h2 {
-    text-align: center;
-    font-size: 2.5rem;
-    color: #3f3d56; /* Gris profond pour un côté classe */
-    font-family: 'Georgia', serif; /* Police Harry Potter-esque */
-    letter-spacing: 2px;
-    margin-bottom: 1.5rem;
-  }
-  
-  /* Section avec du texte et bouton pour générer et rejoindre le tournoi */
-  .section {
-    background-color: #fff;
-    border: 1px solid #dedede;
-    padding: 1.5rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    margin-bottom: 2rem;
-  }
-  
-  p {
-    font-size: 1.2rem;
-    color: #444; /* Couleur claire mais lisible */
-  }
-  
-  b {
-    font-weight: bold;
-    color: #007aff; /* Bleu magique, pour rappeler Apple */
-  }
+.magic-room-container {
+  background-color: #f4f4f4;
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
 
-  /* Style pour le champ input */
-  input {
-    width: 50%;
-    padding: 1rem;
-    margin-top: 1rem;
-    font-size: 1.2rem;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-  }
-  
-  /* Section du propriétaire du tournoi */
-  .tournamentOwnerSection {
-    text-align: center;
-    margin-top: 2rem;
-  }
-  
-  .tournamentOwnerSection button {
-    width: 60%;
-    margin: 0 auto;
-    font-size: 1.2rem;
-    padding: 1.2rem;
-    background-color: #f39c12; /* Or pour un effet magique */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  }
-  
-  .tournamentOwnerSection button:hover {
-    background-color: #e67e22;
-    transform: scale(1.05);
-  }
-  
+/* .magic-room-container:hover {
+  transform: scale(1.02);
+} */
+
+/* Titre principal */
+.magic-room-title {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #3f3d56;
+  letter-spacing: 2px;
+  margin-bottom: 0;
+}
+
+/* Sections */
+.magic-room-section {
+  background-color: #fff;
+  border: 1px solid #dedede;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Section du propriétaire */
+.magic-room-owner-section {
+  text-align: center;
+  background-color: #fffae6;
+  padding: 1.5rem;
+  border-radius: 10px;
+  border: 1px solid #f1e2b8;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Champs input */
+.magic-room-input {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+/* Boutons */
+.magic-room-button {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  background-color: #007aff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  align-self: center;
+}
+
+.magic-room-button:hover {
+  transform: scale(1.05);
+  background-color: #005bb5;
+}
+
+/* Texte */
+.magic-room-text {
+  font-size: 1rem;
+  color: #3f3d56;
+  text-align: center;
+}
+
+.magic-room-code {
+  font-weight: bold;
+  color: #007aff;
+  font-size: 1.2rem;
+  text-align: center;
+}

@@ -3,7 +3,7 @@
  */
 
 import React, { useState } from "react";
-import { login, fetchUserById, manageCookies } from "../services/userService";
+import { login, manageCookies } from "../services/userService";
 import { useDispatch } from "react-redux";
 import { update_user } from "../slices/userSlice";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -25,13 +25,14 @@ export const SignIn = () => {
         try {
             // Première requête : Authentification
             const userLogin : Ilogin = await login(username, password);
-            console.log("Données de connexion récupérées :", userLogin);
-            console.log(`Utilisateur authentifié avec l'ID : ${userLogin.user.id}`);
+            //console.log("Données de connexion récupérées :", userLogin);
+            //console.log(`Utilisateur authentifié avec l'ID : ${userLogin.user.id}`);
 
             // // Deuxième requête : Récupération des informations utilisateur
             // const user: IUser = await fetchUserById(userLogin.user.id);
             // console.log("Données utilisateur récupérées :", user);
             const user : IUser = userLogin.user;
+
             // Gestion du Token, mise dans les cookies
             manageCookies(userLogin.token);
 

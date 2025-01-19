@@ -39,15 +39,17 @@ function ProtectedApp() {
         // Token invalide ou manquant
         if (!token || !isTokenValid(token)) {
             dispatch(logout_user());
-            // alert("You have been logged out for security reasons (token expired)")
-            // navigate("/signin");
+            //alert("You have been logged out for security reasons (token expired)")
+            //navigate("/signin");
             console.log("Token KO - Navigation connectée refusée")
         } else {
             const decoded : DecodedToken = jwtDecode(token);
-            setTokenUserName(decoded.sub)
+            const userName = decoded.sub;
             // Met à jour l'utilisateur dans Redux
-            if (tokenUserName){
-                fetchUserByName(tokenUserName)
+            if (userName){
+                setTokenUserName(userName);
+                console.log(`Try to fetch user ${userName}`)
+                fetchUserByName(userName)
                 .then(user => {
                   dispatch(update_user({ user }));
                   console.log("Utilisateur mis à jour :", user);

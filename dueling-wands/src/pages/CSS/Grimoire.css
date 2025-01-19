@@ -2,7 +2,7 @@
 .container {
     position: relative;
     width: 100vw; 
-    height: 95vh; /* Occupe toute la hauteur de l'écran */
+    height: calc(100vh - 2rem);
     overflow: hidden;
     margin:0%;
     padding-right:0%;
@@ -34,7 +34,7 @@
   /* Assurez-vous que l'image occupe toute la largeur et hauteur */
   .c-image {
     width: 100vw; /* Occupe toute la largeur de l'écran */
-    height: 95vh; /* Occupe toute la hauteur de l'écran */
+    height: calc(100vh - 2rem);
     object-fit: cover; /* L'image couvre toute la zone sans se déformer */
     overflow: hidden;
   }
@@ -75,4 +75,8 @@
   .carousel-control-next, .carousel-control-prev {
     width : 4vw;
     height : 6vh;
+  }
+
+  body{
+    background-color: black;
   }
