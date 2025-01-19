@@ -24,7 +24,6 @@
   
   /* Section du QR Code */
   .qrCodeSection {
-    margin-top: 2rem;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -41,7 +40,7 @@
     font-size: 2rem;
     color: #3f3d56; /* Gris profond */
     font-family: 'Georgia', serif; /* Police magique */
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     letter-spacing: 1.5px;
   }
   

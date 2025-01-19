@@ -11,7 +11,6 @@ import styles from "./CSS/signup.module.css";
 
 import IUser from '../types/IUser';
 import CarouselComponent from "../components/signup/CarouselComponent";
-//import Grimoire from "./Grimoire"
 import EHouses from "../types/EHouses";
 
 export const Signup = () => {
@@ -95,13 +94,10 @@ export const Signup = () => {
 
     return (
         <div className={styles["signup-container"]}>
+            <CarouselComponent onSlideChange={handleSlideChange}/>
             <div className={styles["signup-card"]}>
                 <h1>Create an account</h1>
                 <form onSubmit={handleSubmit}>
-                    <div className={styles["input-container"]}>
-                    <CarouselComponent onSlideChange={handleSlideChange}/>
-                    
-                    </div>
                     <div className={styles["input-container"]}>
                         <label htmlFor="login">Username :</label>
                         <input

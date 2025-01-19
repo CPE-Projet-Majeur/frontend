@@ -1,17 +1,16 @@
 import React from "react";
-import { useTypedMessage } from "../../hooks/useTypeMessage";
-import styles from "./CSS/BattleAnnouncer.module.css"
+import styles from "./CSS/BattleAnnouncer.module.css";
 
 interface IProps {
-    message : string,
+    message: string;
 }
 
-export const BattleAnnouncer = (props : IProps) => {
-    const typedMessage : string = useTypedMessage(props.message);
-    //console.log("Typed message :" + typedMessage);
+export const BattleAnnouncer = (props: IProps) => {
+    const typedMessage: string = props.message;
+
     return (
         <div className={styles.main}>
-            <p className={styles.message}> {typedMessage} </p>
+            <p className={styles.message}>{typedMessage}</p>
         </div>
-    )
-}
+    );
+};

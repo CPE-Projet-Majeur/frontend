@@ -35,7 +35,7 @@ export const Duel = (props : IProps) => {
 
     return (
         <div className={styles.main}>
-            <video
+            {/* <video
                 key={videoSource} 
                 src={videoSource}
                 autoPlay
@@ -43,7 +43,7 @@ export const Duel = (props : IProps) => {
                 loop
                 playsInline
                 className={styles.backgroundVideo}
-            />
+            /> */}
             <div className={styles.overlay}>
                 {mode === 'battle' && (
                     <div className={styles.battle}>
@@ -56,6 +56,7 @@ export const Duel = (props : IProps) => {
                 {mode === 'gameOver' && (
                     <div className={styles.gameOver}>
                         <p>Game Over, the winner is <b>{winner}</b></p>
+                        <img src= "https://www.kadaes.com/wp-content/uploads/2019/12/m-h-single-img-2-1.jpg" />
                     </div>
                 )}
             </div>
