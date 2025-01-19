@@ -8,6 +8,7 @@ COPY ./dueling-wands/tsconfig*.json .
 COPY ./dueling-wands/vite.config.ts .
 COPY ./dueling-wands/index.html .
 COPY ./dueling-wands/src ./src
+COPY ./dueling-wands/public ./public
 
 #RUN npm install
 #RUN npm run build TODO : add ts compilation : npx tsc -b
