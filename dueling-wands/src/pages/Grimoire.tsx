@@ -56,7 +56,7 @@ export const Grimoire = () => {
               <p>{item.description}</p>
               <p>Type : {item.type}</p>
               <p>Affinity : {item.affinity}</p>
-              <p>Damage : {item.dmg}</p>
+              <p>Damage : {item.damage}</p>
               <p>Difficulty : {item.difficulty}</p>
             </CCarouselCaption>
           </CCarouselItem>

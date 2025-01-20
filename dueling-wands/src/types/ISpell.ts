@@ -5,7 +5,7 @@ export default interface ISpell {
     id : number,
     name : string,
     description : string,
-    dmg : number,
+    damage : number,
     type : ESpellTypes,
     affinity : ESpellAffinities,
     difficulty : number,
