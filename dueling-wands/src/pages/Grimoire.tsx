@@ -7,57 +7,56 @@ import { fetchAllSpells } from '../services/spellService';
 import ESpellTypes from '../types/ESpellType';
 import ESpellAffinities from '../types/ESpellAffinity';
 
-export const Grimoire = () => {
+export const Grimoire = async () => {
 
-    let spellList : ISpell[];
-    //spellList : ISpell[] = await fetchAllSpells();
+    let spellList : ISpell[] = await fetchAllSpells();
 
-    spellList = [
-      {
-        id: 1,
-        name: 'Flame Burst',
-        description: 'Unleashes a burst of flames that engulfs enemies.',
-        dmg: 75,
-        type: ESpellTypes.AILMENT,
-        affinity: ESpellAffinities.FIRE,
-        difficulty: 3,
-      },
-      {
-        id: 2,
-        name: 'Aqua Shield',
-        description: 'Creates a water barrier to block incoming attacks.',
-        dmg: 0,
-        type: ESpellTypes.ATTACK,
-        affinity: ESpellAffinities.NEUTRAL,
-        difficulty: 2,
-      },
-      {
-        id: 3,
-        name: 'Stone Spike',
-        description: 'Summons a sharp spike of earth to impale enemies.',
-        dmg: 90,
-        type: ESpellTypes.HEAL,
-        affinity: ESpellAffinities.FIRE,
-        difficulty: 4,
-      },
-      {
-        id: 4,
-        name: 'Gale Force',
-        description: 'Releases a powerful gust of wind to knock back enemies.',
-        dmg: 50,
-        type: ESpellTypes.AILMENT,
-        affinity: ESpellAffinities.NEUTRAL,
-        difficulty: 3,
-      },
-      {
-        id: 5,
-        name: 'Radiant Heal',
-        description: 'A bright light restores health to allies.',
-        dmg: 0,
-        type: ESpellTypes.DEFENSE,
-        affinity: ESpellAffinities.WIND,
-        difficulty: 2,
-      },]
+    // spellList = [
+    //   {
+    //     id: 1,
+    //     name: 'Ascendio',
+    //     description: 'Unleashes a burst of flames that engulfs enemies.',
+    //     dmg: 75,
+    //     type: ESpellTypes.AILMENT,
+    //     affinity: ESpellAffinities.FIRE,
+    //     difficulty: 3,
+    //   },
+    //   {
+    //     id: 2,
+    //     name: 'Ascendio',
+    //     description: 'Creates a water barrier to block incoming attacks.',
+    //     dmg: 0,
+    //     type: ESpellTypes.ATTACK,
+    //     affinity: ESpellAffinities.NEUTRAL,
+    //     difficulty: 2,
+    //   },
+    //   {
+    //     id: 3,
+    //     name: 'Stone Spike',
+    //     description: 'Summons a sharp spike of earth to impale enemies.',
+    //     dmg: 90,
+    //     type: ESpellTypes.HEAL,
+    //     affinity: ESpellAffinities.FIRE,
+    //     difficulty: 4,
+    //   },
+    //   {
+    //     id: 4,
+    //     name: 'Gale Force',
+    //     description: 'Releases a powerful gust of wind to knock back enemies.',
+    //     dmg: 50,
+    //     type: ESpellTypes.AILMENT,
+    //     affinity: ESpellAffinities.NEUTRAL,
+    //     difficulty: 3,
+    //   },
+    //   {
+    //     id: 5,
+    //     name: 'Radiant Heal',
+    //     description: 'A bright light restores health to allies.',
+    //     dmg: 0,
+    //     type: ESpellTypes.DEFENSE,
+    //     affinity: ESpellAffinities.WIND,
+    //     difficulty: 2,
+    //   },]
 
       // EAU :
       //https://videos.pexels.com/video-files/7385122/7385122-uhd_2560_1440_30fps.mp4
@@ -70,10 +69,15 @@ export const Grimoire = () => {
         <CCarousel controls indicators dark interval={false} className="c-carousel">
         {spellList.map((item) => (
           <CCarouselItem key={item.id}>
-            <CImage className="d-block w-100 c-image" src={""} />
+            <CImage className="d-block w-100 c-image" src={"https://img2.wallspic.com/crops/3/1/8/7/5/157813/157813-foret_magique-fee-foret-magie-atmosphere-3840x2160.jpg"} />
             {/* <video autoPlay playsInline loop className="d-block w-100 c-image" src="https://videos.pexels.com/video-files/2715412/2715412-uhd_2560_1440_30fps.mp4" /> */}
             <CCarouselCaption className="d-none d-md-block ccarousel-caption">
-            <img className="w-100 tuto" src="/images/patronus.jpg"/>
+            {/* <img className="w-100 tuto" src="/images/patronus.jpg"/> */}
+              <img 
+                  className="w-100 tuto" 
+                  src={`/carousel/${item?.name?.toLowerCase() || "default"}.gif`} 
+                  alt={`${item?.name || "ascendio"} animation`} 
+              />
               <h5> {item.name}</h5>
               <p>{item.description}</p>
               <p>Type : {item.type}</p>

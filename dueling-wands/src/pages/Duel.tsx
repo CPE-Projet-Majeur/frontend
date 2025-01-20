@@ -56,7 +56,7 @@ export const Duel = (props : IProps) => {
                 {mode === 'gameOver' && (
                     <div className={styles.gameOver}>
                         <p>Game Over, the winner is <b>{winner}</b></p>
-                        <img src= "https://www.kadaes.com/wp-content/uploads/2019/12/m-h-single-img-2-1.jpg" />
+                        <img src="https://images6.alphacoders.com/112/1120443.jpg" alt="Game Over" />
                     </div>
                 )}
             </div>

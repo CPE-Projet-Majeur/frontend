@@ -12,6 +12,7 @@
 
   .tuto {
     padding-bottom: 6%;
+    max-height: 60vh;
   }
   
   /* Applique un fond sombre semi-transparent sur la légende du carrousel */

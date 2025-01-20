@@ -154,9 +154,9 @@ export const Tournament = () => {
             {tournamentOver && (
                 <div className={styles.section}>
                     <h2>The tournament is Over</h2>
-                    <p>Thanks for your <b>Magic</b> participation <b>Warloks</b></p>
+                    <p className={styles.sectionP}>Thanks for your <b>Magic</b> participation <b>Warloks</b></p>
                     <Tree tournamentData={tree}/>
-                    <button onClick={RestartNewTournament}>Start a new Tournament</button>
+                    <button className={styles.overButton} onClick={RestartNewTournament}>Start a new Tournament</button>
                 </div>
             )}
         </div>

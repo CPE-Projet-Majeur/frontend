@@ -71,48 +71,63 @@
 }
 
 /* Game Over */
+/* GameOver.module.css */
+
 .gameOver {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.8); /* Fond sombre pour une ambiance dramatique */
-  color: #ffffff; /* Texte blanc pour le contraste */
-  padding: 2rem;
-  border-radius: 15px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5); /* Effet d'élévation subtile */
-  max-width: 600px;
-  margin: 2rem auto; /* Centrage automatique */
-  animation: fadeIn 1s ease-in-out; /* Animation douce à l'apparition */
+  background: linear-gradient(135deg, #2c3e50, #34495e); /* Gradient élégant */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Ombre pour un effet de profondeur */
+  color: #ecf0f1; /* Texte clair */
+  width: 80%; /* Largeur ajustable */
+  max-width: 600px; /* Limite la largeur pour les écrans larges */
+  margin: 40px auto; /* Centrage */
+  animation: fadeIn 1s ease-in-out;
 }
 
-/* Texte principal */
 .gameOver p {
-  font-size: 1.5rem; /* Taille du texte pour une meilleure lisibilité */
-  margin: 0.5rem 0;
-  font-family: 'Georgia', serif; /* Police élégante */
-  color: #f8d64e; /* Doré pour un effet "victoire" */
-}
-
-/* Nom du gagnant en gras et coloré */
-.gameOver b {
-  color: #4caf50; /* Vert pour symboliser le succès */
+  font-size: 1.5rem; /* Taille de police adaptée */
   font-weight: bold;
-  font-size: 1.7rem; /* Légèrement plus grand pour ressortir */
+  margin: 0 0 20px 0; /* Espacement inférieur */
 }
 
-/* Image du vainqueur */
+.gameOver b {
+  color: #e74c3c; /* Couleur accrocheuse pour le nom du gagnant */
+}
+
 .gameOver img {
-  margin-top: 1.5rem;
-  max-width: 100%; /* S'adapte à la taille du conteneur */
-  height: auto;
-  border-radius: 10px; /* Coins arrondis pour une apparence soignée */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); /* Ombre pour la profondeur */
+  width: 100%; /* L'image occupe toute la largeur */
+  max-width: 400px; /* Limite pour éviter une trop grande image */
+  border-radius: 8px; /* Coins arrondis pour un effet esthétique */
+  margin-top: 20px; /* Espacement supérieur */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Ombre légère */
+  transition: transform 0.3s ease-in-out; /* Animation au survol */
+}
+
+.gameOver img:hover {
+  transform: scale(1.05); /* Zoom léger au survol */
 }
 
 /* Animation d'apparition */
 @keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+
+/* Animation d'apparition */
+/* @keyframes fadeIn {
   from {
       opacity: 0;
       transform: scale(0.9);
@@ -121,7 +136,7 @@
       opacity: 1;
       transform: scale(1);
   }
-}
+} */
 
 
 .backgroundVideo {
