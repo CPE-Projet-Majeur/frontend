@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '@coreui/coreui/dist/css/coreui.min.css'
 import "./CSS/Grimoire.css"
 import { CCarousel, CCarouselCaption, CCarouselItem, CImage } from '@coreui/react'
@@ -7,67 +7,41 @@ import { fetchAllSpells } from '../services/spellService';
 import ESpellTypes from '../types/ESpellType';
 import ESpellAffinities from '../types/ESpellAffinity';
 
-export const Grimoire = async () => {
+export const Grimoire = () => {
 
-    let spellList : ISpell[] = await fetchAllSpells();
+    // let spellList : ISpell[] = await fetchAllSpells();
 
-    // spellList = [
-    //   {
-    //     id: 1,
-    //     name: 'Ascendio',
-    //     description: 'Unleashes a burst of flames that engulfs enemies.',
-    //     dmg: 75,
-    //     type: ESpellTypes.AILMENT,
-    //     affinity: ESpellAffinities.FIRE,
-    //     difficulty: 3,
-    //   },
-    //   {
-    //     id: 2,
-    //     name: 'Ascendio',
-    //     description: 'Creates a water barrier to block incoming attacks.',
-    //     dmg: 0,
-    //     type: ESpellTypes.ATTACK,
-    //     affinity: ESpellAffinities.NEUTRAL,
-    //     difficulty: 2,
-    //   },
-    //   {
-    //     id: 3,
-    //     name: 'Stone Spike',
-    //     description: 'Summons a sharp spike of earth to impale enemies.',
-    //     dmg: 90,
-    //     type: ESpellTypes.HEAL,
-    //     affinity: ESpellAffinities.FIRE,
-    //     difficulty: 4,
-    //   },
-    //   {
-    //     id: 4,
-    //     name: 'Gale Force',
-    //     description: 'Releases a powerful gust of wind to knock back enemies.',
-    //     dmg: 50,
-    //     type: ESpellTypes.AILMENT,
-    //     affinity: ESpellAffinities.NEUTRAL,
-    //     difficulty: 3,
-    //   },
-    //   {
-    //     id: 5,
-    //     name: 'Radiant Heal',
-    //     description: 'A bright light restores health to allies.',
-    //     dmg: 0,
-    //     type: ESpellTypes.DEFENSE,
-    //     affinity: ESpellAffinities.WIND,
-    //     difficulty: 2,
-    //   },]
+    const [spellList, setSpellList] = useState<ISpell[] | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
 
-      // EAU :
-      //https://videos.pexels.com/video-files/7385122/7385122-uhd_2560_1440_30fps.mp4
-      //FEU
-      //https://videos.pexels.com/video-files/2715412/2715412-uhd_2560_1440_30fps.mp4
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const result = await fetchAllSpells();
+                setSpellList(result);
+            } catch (err) {
+                setError('Erreur lors de la récupération des sorts');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    if (loading) {
+        return <div>Chargement des sorts...</div>;
+    }
+
+    if (error) {
+        return <div>{error}</div>;
+    }
       
-
     return (
       <div className="container">
         <CCarousel controls indicators dark interval={false} className="c-carousel">
-        {spellList.map((item) => (
+        {spellList && spellList.length > 0 && spellList.map((item) => (
           <CCarouselItem key={item.id}>
             <CImage className="d-block w-100 c-image" src={"https://img2.wallspic.com/crops/3/1/8/7/5/157813/157813-foret_magique-fee-foret-magie-atmosphere-3840x2160.jpg"} />
             {/* <video autoPlay playsInline loop className="d-block w-100 c-image" src="https://videos.pexels.com/video-files/2715412/2715412-uhd_2560_1440_30fps.mp4" /> */}
