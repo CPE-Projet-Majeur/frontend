@@ -7,17 +7,12 @@ interface Match {
     winner: string | null;
 }
 
-type TournamentTree = {
-    [key: number]: Match;
-};
-
 interface TreeProps {
     tournamentData?: Map<number, TournamentNode[]>;
 }
 
 function convertToMatchFormat(tree: string): Record<string, Match[]> {
     const convertedData: Record<string, Match[]> = {};
-
     try {
         // Parse le JSON global
         const parsedTree = JSON.parse(tree) as Record<string, string[]>;
@@ -43,15 +38,12 @@ function convertToMatchFormat(tree: string): Record<string, Match[]> {
     } catch (error) {
         console.error("Erreur lors du parsing du tournoi:", error);
     }
-
     return convertedData;
 }
 
-
-
 export const Tree = (props: TreeProps) => {
     const tournamentData = convertToMatchFormat(props.tournamentData as unknown as string);
-    console.log(tournamentData)
+    //console.log(tournamentData)
     
     if (!tournamentData || Object.keys(tournamentData).length === 0) {
         return <div className={styles.treeContainer}><p>No tournament data available</p></div>;
@@ -85,30 +77,4 @@ export const Tree = (props: TreeProps) => {
         </div>
     );
 }    
-
-//     return (
-//         <div className={styles.treeContainer}>
-//             <h2>Fight Preparation</h2>
-//             {levels.map((matches, levelIndex) => (
-//                 <div key={levelIndex} className={styles.level}>
-//                     {matches.map((matchId) => {
-//                         const match = tournamentData[parseInt(matchId)];
-//                         return (
-//                             <div key={matchId} className={styles.match}>
-//                                 <div className={styles.players}>
-//                                     {match.players.map((player, i) => (
-//                                         <div key={i} className={styles.player}>{player}</div>
-//                                     ))}
-//                                 </div>
-//                                 <div className={styles.winner}>
-//                                     <p>Winner: {match.winner || '-'}</p>
-//                                 </div>
-//                             </div>
-//                         );
-//                     })}
-//                 </div>
-//             ))}
-//         </div>
-//     );
-// };
 export default Tree;

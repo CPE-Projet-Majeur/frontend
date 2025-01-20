@@ -65,14 +65,13 @@ export const Tournament = () => {
     if (socket){
         // Receive the information to start a tournament
         socket.on(ESocket.TOURNAMENT_BRACKET_START, (data : BracketStartData) => {
-            console.log("Received TOURNAMENT_BRACKET_START")
+            //console.log("Received TOURNAMENT_BRACKET_START")
             let battleId : number = data.battleId;
-            let userIds : number[] = data.userIds;
+            //let userIds : number[] = data.userIds;
             let tree : Map<number, TournamentNode[]> = data.tree;
             setBattleId(battleId);
             setInTournament(true);
             setTree(tree);
-
             // Set usefull for the other rounds of battle in the tournament :
             setInFight(false);
             setWait(false);
@@ -80,13 +79,13 @@ export const Tournament = () => {
 
         // Receive the acknolegement, the user succesfully joined the room via the QRcode
         socket.on(ESocket.WAITING_ACKNOWLEDGED, () => {
-            console.log("Received WAITING_ACKNOWLEDGED")
+            //console.log("Received WAITING_ACKNOWLEDGED")
             setWait(true);
         });
 
         // Receive the Start ==> Users can start to fight
         socket.on(ESocket.BATTLE_START, (data : StartPayload) => {
-            console.log("Received BATTLE_START : battleId : "+battleId+" - players : "+players+" - weather : "+weather);
+            //console.log("Received BATTLE_START : battleId : "+battleId+" - players : "+players+" - weather : "+weather);
             setBattleId(data.battleId);
             setPlayers(data.players);
             setWeather(data.weather);

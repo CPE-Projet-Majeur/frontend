@@ -4,13 +4,8 @@ import "./CSS/Grimoire.css"
 import { CCarousel, CCarouselCaption, CCarouselItem, CImage } from '@coreui/react'
 import ISpell from '../types/ISpell';
 import { fetchAllSpells } from '../services/spellService';
-import ESpellTypes from '../types/ESpellType';
-import ESpellAffinities from '../types/ESpellAffinity';
 
 export const Grimoire = () => {
-
-    // let spellList : ISpell[] = await fetchAllSpells();
-
     const [spellList, setSpellList] = useState<ISpell[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -26,14 +21,12 @@ export const Grimoire = () => {
                 setLoading(false);
             }
         };
-
         fetchData();
     }, []);
-
+    
     if (loading) {
-        return <div>Chargement des sorts...</div>;
+        return <div>Book enchanting...</div>;
     }
-
     if (error) {
         return <div>{error}</div>;
     }
@@ -56,7 +49,7 @@ export const Grimoire = () => {
               <p>{item.description}</p>
               <p>Type : {item.type}</p>
               <p>Affinity : {item.affinity}</p>
-              <p>Damage : {item.dmg}</p>
+              <p>Damage : {item.damage}</p>
               <p>Difficulty : {item.difficulty}</p>
             </CCarouselCaption>
           </CCarouselItem>

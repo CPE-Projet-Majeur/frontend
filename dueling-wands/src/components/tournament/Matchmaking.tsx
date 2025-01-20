@@ -15,17 +15,6 @@ interface IProps {
 export const Matchmaking = (props : IProps) => {
     const tree = props.tree;
     const battleId = props.battleId;
-    console.log("Tree : "+tree);
-
-    const mockTournamentData = {
-        0: { players: ['Alice', 'Bob'], winner: 'Alice' },
-        1: { players: ['Charlie', 'David'], winner: 'Charlie' },
-        2: { players: ['Alice', 'Charlie'], winner: 'Alice' },
-        3: { players: ['Eve', 'Frank'], winner: 'Eve' },
-        4: { players: ['Grace', 'Hank'], winner: 'Grace' },
-        5: { players: ['Eve', 'Grace'], winner: 'Eve' },
-        6: { players: ['Alice', 'Eve'], winner: null }
-    };
 
     // Section ne servant que pour la simulation du tel qui scan le qr code et contacte le back
     const socketMobile = props.socketMobile;
@@ -48,7 +37,7 @@ export const Matchmaking = (props : IProps) => {
         <div className={styles.qrCodeSection}>
             <QrCode qrdata={battleId} />
         </div>
-        <button onClick={simulateMobile}>Simulate Mobile</button>
+        {/* <button onClick={simulateMobile}>Simulate Mobile</button> */}
     </div>
 );
 };
