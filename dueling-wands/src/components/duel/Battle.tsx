@@ -29,8 +29,10 @@ export const   Battle = (props:IProps) => {
     const [opponentName, setOpponentName] = useState("");
     const [playerEffect, setPlayerEffect] = useState("");
     const [opponentEffect, setOpponentEffect] = useState("");
-    const [playerSpell, setPlayerSpell] = useState<ESpells>();
-    const [opponentSpell, setOpponentSpell] = useState<ESpells>();
+    // const [playerSpell, setPlayerSpell] = useState<ESpells>();
+    // const [opponentSpell, setOpponentSpell] = useState<ESpells>();
+    const [playerSpell, setPlayerSpell] = useState<{ spell: ESpells | undefined, round: number }>({ spell: undefined, round: 0 });
+    const [opponentSpell, setOpponentSpell] = useState<{ spell: ESpells | undefined, round: number }>({ spell: undefined, round: 0 });
     const [counter, setCounter] = useState<number>(0);
 
     let userId = useSelector((state: RootState) => state.user.user!.id);
@@ -63,12 +65,14 @@ export const   Battle = (props:IProps) => {
     }, [opponentEffect, counter]);
 
     function handleEffects () {
-        chooseEffect (playerSpell, setPlayerEffect);
-        chooseEffect (opponentSpell, setOpponentEffect);
+        chooseEffect (playerSpell.spell, setPlayerEffect);
+        chooseEffect (opponentSpell.spell, setOpponentEffect);
         console.log(`player effect et opponent effect : ${playerEffect} : ${opponentEffect} `)
+        // setCounter(counter+1);
     }
 
     function chooseEffect (spell : ESpells | undefined, setEffect: (effect: string) => void) {
+        console.log("Spell before switch case "+spell);
         switch (spell) {
             case ESpells.AGUAMENTI :
                 setEffect("water");
@@ -89,7 +93,7 @@ export const   Battle = (props:IProps) => {
                 setEffect("fire");
                 break;
             case ESpells.PROTEGO :
-                setEffect("water");
+                setEffect("light");
                 break;
             case ESpells.VENTUS :
                 setEffect("mental");
@@ -119,7 +123,6 @@ export const   Battle = (props:IProps) => {
     // Receive users actions ==> log + view update
     socket.on(ESocket.BATTLE_SEND_ACTION, (data : SendActionPayload[]) => {
         console.log("Received BATTLE_SEND_ACTION");
-        setCounter(counter+1);
         let newMessage : string = "";
         data.forEach(action => {
             let senderName :string = "";
@@ -132,23 +135,32 @@ export const   Battle = (props:IProps) => {
             console.log(`SPELL NAME RECEIVED :::::: ${spellName} and counter ${counter}`);
 
             if (targetId === userId){
+                console.log("here")
                 receiverName = playerName;
                 senderName = opponentName;
                 setPlayerHealth(remainingHp);
-                setPlayerSpell(spellName);
+                setPlayerSpell({ spell: spellName, round: counter + 1 });
             }else {
+                console.log("there")
                 receiverName = opponentName;
                 senderName = playerName;
                 setOpponentHealth(remainingHp);
-                setOpponentSpell(spellName);
+                setOpponentSpell({ spell: spellName, round: counter + 1 });
             }
-            handleEffects();
             
             newMessage = newMessage + `\n${senderName} used ${spellName} against ${receiverName} with ${accuracy }% accuracy`
             newMessage = newMessage + `\n${receiverName} suffered ${damage} damages, they now have ${remainingHp} HP remaining\n`
         })
+        setCounter((prevCounter) => prevCounter + 1);
+        // handleEffects();
         setAnnouncerMessage(newMessage);
     });
+
+    useEffect(() => {
+        handleEffects();
+        console.log(`We now have ${playerSpell} and ${opponentSpell} ^^^^^^^^`)
+    }, [playerSpell, opponentSpell]);
+    
 
     // Game Over ==> Update view for results
     socket.on(ESocket.BATTLE_OVER, (data : BattleEndPayload) => {
@@ -229,7 +241,7 @@ export const   Battle = (props:IProps) => {
                     muted
                     autoPlay
                     className={`${styles["character-sprite"]} ${styles["opponent-sprite"]}`}
-                    src={`/duel/right/${opponentEffect}.mov`}
+                    src={`/duel/right/${opponentEffect}_attack.mov`}
                     // alt={opponentName}
                 />
             </div>

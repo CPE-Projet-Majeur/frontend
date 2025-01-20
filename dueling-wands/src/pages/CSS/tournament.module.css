@@ -39,6 +39,22 @@
     color: #3f3d56; /* Gris profond */
     text-align: center;
   }
+
+  .sectionP {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.section b {
+    color: #f87171; /* Couleur vive pour "Magic" et "Warlocks" */
+}
+
+.overButton {
+  display: block; /* Force le bouton à se comporter comme un bloc */
+  margin: 20px auto 0; /* Centre horizontalement et ajoute une marge au-dessus */
+}
   
   /* Effet bouton élégant */
   button {

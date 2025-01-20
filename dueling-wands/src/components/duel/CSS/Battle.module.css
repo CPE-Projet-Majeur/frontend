@@ -35,16 +35,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem;
-  gap: 2rem;
+  /* padding: 2rem; */
+  /* gap: 2rem; */
   box-sizing: border-box;
+  border-radius: 5%;
+  background-color: black;
 }
 
 /* Sprite des personnages */
 .character-sprite {
-  max-height: 25vh;
+  /* max-height: 25vh; */
   min-height: 150px;
+  min-width:50%;
   transition: 0.5s ease;
+  border-radius: 5%;
 }
 
 /* Animation d'attaque */
