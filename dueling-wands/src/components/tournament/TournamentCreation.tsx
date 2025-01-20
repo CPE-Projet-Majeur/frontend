@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { set_owner_id } from '../../slices/tournamentSlice';
+//import { set_owner_id } from '../../slices/tournamentSlice';
 import { RootState } from '../../store';
 import styles from "./CSS/tournamentCreation.module.css"
 import { Socket } from 'socket.io-client';
@@ -32,13 +32,13 @@ export const TournamentCreation = (props : IProps) => {
 
     // Receive the Tournament code - OK
     socket.on(ESocket.TOURNAMENT_CREATED, (data) => {
-        console.log("Received data from socket on TOURNAMENT_CREATED : "+data)
+        //console.log("Received data from socket on TOURNAMENT_CREATED : "+data)
         let tournamentCode : string = data.code;
         let tournamentIdentifier : number = data.tournamentId;
         setGeneratedCode(tournamentCode);
         setTournamentId(tournamentIdentifier);
         setTournamentOwner(true);
-        dispatch(set_owner_id({ id : ownerId }));
+        //dispatch(set_owner_id({ id : ownerId }));
     });
 
     // Receive the status room joining - OK
@@ -46,7 +46,7 @@ export const TournamentCreation = (props : IProps) => {
         let tournamentId = data.tournamentId;
         let tournamentName = data.tournamentName;
         let tournamentParticipantsList = data.tournamentParticipants;
-        console.log("Tournament list : "+tournamentParticipantsList)
+        //console.log("Tournament list : "+tournamentParticipantsList)
         setTournamentId(tournamentId);
         setTournamentName(tournamentName);
         setTournamentParticipants(tournamentParticipantsList);
@@ -59,7 +59,7 @@ export const TournamentCreation = (props : IProps) => {
         else {
             const data = tournamentName;
             setTournamentParticipants([{name : ownerName, id : ownerId}]);
-            console.log("Try to emit TOURNAMENT_CREATION : "+data);
+            //console.log("Try to emit TOURNAMENT_CREATION : "+data);
             socket.emit(ESocket.TOURNAMENT_CREATION, data);
         }
     }
@@ -67,14 +67,14 @@ export const TournamentCreation = (props : IProps) => {
     // Ask to join a tournament - OK
     function joinTournament () {
         const data = friendCode
-        console.log("Try to join my friend's tournament : " + data);
+        //console.log("Try to join my friend's tournament : " + data);
         socket.emit(ESocket.TOURNAMENT_JOIN, data);
     }
 
     // Ask to start a tournament - OK
     function start () {
         const data = tournamentId;
-        console.log("Try to start the tournament with the id : "+ data);
+        //console.log("Try to start the tournament with the id : "+ data);
         socket.emit(ESocket.TOURNAMENT_START, data)
     }
 

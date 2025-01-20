@@ -35,7 +35,7 @@ export const SignIn = () => {
             }
             // Deuxième requête : Récupération des informations utilisateur
             const user: IUser = await fetchUserByName(decoded.sub!);
-            console.log("Données utilisateur récupérées :", user);
+            //console.log("Données utilisateur récupérées :", user);
             //const user : IUser = userLogin.user;
 
             // Gestion du Token, mise dans les cookies
@@ -44,7 +44,7 @@ export const SignIn = () => {
             // Mise à jour du user dans le store Redux
             dispatch(update_user({ user }));
 
-            console.log("User connected :", user);
+            //console.log("User connected :", user);
             navigate("/profile");
         } catch (error: any) {
             setError("Wrong Username or password");

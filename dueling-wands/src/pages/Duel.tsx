@@ -13,37 +13,13 @@ interface IProps {
     socketMobile : Socket,
 }
 
-const getWeatherVideo = (weather: EWeather) => {
-    switch (weather) {
-        case EWeather.SUNNY: 
-            return "https://videos.pexels.com/video-files/2098989/2098989-hd_1920_1080_25fps.mp4";
-        case EWeather.SUNNY: 
-            return "https://videos.pexels.com/video-files/3197031/3197031-hd_1920_1080_25fps.mp4";
-        case EWeather.SUNNY: 
-            return "https://videos.pexels.com/video-files/857094/857094-hd_1920_1080_25fps.mp4";
-        default:
-            return "https://videos.pexels.com/video-files/3433955/3433955-uhd_2732_1440_24fps.mp4";
-    }
-}
-
 export const Duel = (props : IProps) => {
     const socket=props.socket;
     const [mode,setMode] = useState('battle');
     const [winner, setWinner] = useState<string>("-");
 
-    const videoSource = getWeatherVideo(props.weather);
-
     return (
         <div className={styles.main}>
-            {/* <video
-                key={videoSource} 
-                src={videoSource}
-                autoPlay
-                muted
-                loop
-                playsInline
-                className={styles.backgroundVideo}
-            /> */}
             <div className={styles.overlay}>
                 {mode === 'battle' && (
                     <div className={styles.battle}>

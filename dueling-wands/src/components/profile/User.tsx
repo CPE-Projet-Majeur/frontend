@@ -12,7 +12,6 @@ interface IProps {
 export const User = (props : IProps) => {
     return (
         <div>
-            {/* <h2>My ID : {props.user.id}</h2> */}
             <h3>{props.user.login}</h3>
             <p>------------</p>
             <p>Firstname : {props.user.firstName}</p>

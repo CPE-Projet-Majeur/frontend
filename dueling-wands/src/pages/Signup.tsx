@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { update_user } from "../slices/userSlice";
 import { register, manageCookies, fetchUserByName } from "../services/userService";
 import styles from "./CSS/signup.module.css";
-
 import IUser from '../types/IUser';
 import CarouselComponent from "../components/signup/CarouselComponent";
 import EHouses from "../types/EHouses";
@@ -30,19 +29,15 @@ export const Signup = () => {
             alert("The password must be at least 8 characters long");
             return false;
           }
-          
         else if (!/\d/.test(password)) {
             alert("The password must contain at least one number");
             return false;
           }
-          
         else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
             alert("The password must contain at least one special character");
             return false;
           }   
-        
         return  true;      
-
     }
 
     const handleSubmit = async (e : React.FormEvent) => {
@@ -69,13 +64,12 @@ export const Signup = () => {
             const registration = await register(submittedUser);
             const token = registration.token;
             const decoded = jwtDecode(token);
-            // user.id = registration.user.id;
-            
+
             if (!token) {
                 throw new Error("Token not found in the response");
             }
             const user: IUser = await fetchUserByName(decoded.sub!);
-            console.log("Données utilisateur récupérées :", user);
+            //console.log("Données utilisateur récupérées :", user);
             
             // Mise du token du user dans les cookies #securité
             manageCookies(token);
@@ -92,7 +86,7 @@ export const Signup = () => {
 
     // Gestion des changements de slides actives du caroussel pour attribuer une maison à un user
     const handleSlideChange = (index: number, activeItem: { title: EHouses, description: string }) => {
-    console.log(`Slide actif : ${index}, Titre : ${activeItem.title}`);
+    //console.log(`Slide actif : ${index}, Titre : ${activeItem.title}`);
     setHouse(activeItem.title);
     };
 

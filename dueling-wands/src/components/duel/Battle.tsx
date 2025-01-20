@@ -4,7 +4,7 @@ import { BattleAnnouncer } from "./BattleAnnouncer";
 import styles from "./CSS/Battle.module.css"
 import { Socket } from "socket.io-client";
 import { ESocket } from "../../types/ESocket";
-import { BattleEndPayload, ESpells, Player, SendActionPayload, StartPayload } from "../../types/TBattle";
+import { BattleEndPayload, ESpells, Player, SendActionPayload } from "../../types/TBattle";
 import { EWeather } from "../../types/EWeather";
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
@@ -29,8 +29,6 @@ export const   Battle = (props:IProps) => {
     const [opponentName, setOpponentName] = useState("");
     const [playerEffect, setPlayerEffect] = useState("");
     const [opponentEffect, setOpponentEffect] = useState("");
-    // const [playerSpell, setPlayerSpell] = useState<ESpells>();
-    // const [opponentSpell, setOpponentSpell] = useState<ESpells>();
     const [playerSpell, setPlayerSpell] = useState<{ spell: ESpells | undefined, round: number }>({ spell: undefined, round: 0 });
     const [opponentSpell, setOpponentSpell] = useState<{ spell: ESpells | undefined, round: number }>({ spell: undefined, round: 0 });
     const [counter, setCounter] = useState<number>(0);
@@ -42,7 +40,7 @@ export const   Battle = (props:IProps) => {
     let weather : EWeather = props.weather;
     let battleId : number = props.battleId;
     const socket = props.socket;
-    const socketMobile = props.socketMobile; // to comment
+    const socketMobile = props.socketMobile;
 
     const handleGameEnd = (winner: string) => {
         setWinner(winner);
@@ -67,12 +65,9 @@ export const   Battle = (props:IProps) => {
     function handleEffects () {
         chooseEffect (playerSpell.spell, setPlayerEffect);
         chooseEffect (opponentSpell.spell, setOpponentEffect);
-        console.log(`player effect et opponent effect : ${playerEffect} : ${opponentEffect} `)
-        // setCounter(counter+1);
     }
 
     function chooseEffect (spell : ESpells | undefined, setEffect: (effect: string) => void) {
-        console.log("Spell before switch case "+spell);
         switch (spell) {
             case ESpells.AGUAMENTI :
                 setEffect("water");
@@ -122,7 +117,7 @@ export const   Battle = (props:IProps) => {
 
     // Receive users actions ==> log + view update
     socket.on(ESocket.BATTLE_SEND_ACTION, (data : SendActionPayload[]) => {
-        console.log("Received BATTLE_SEND_ACTION");
+        //console.log("Received BATTLE_SEND_ACTION");
         let newMessage : string = "";
         data.forEach(action => {
             let senderName :string = "";
@@ -132,8 +127,6 @@ export const   Battle = (props:IProps) => {
             let accuracy : number = action.accuracy;
             let remainingHp : number = action.remainingHp;
             let damage : number = action.damage;
-            console.log(`SPELL NAME RECEIVED :::::: ${spellName} and counter ${counter}`);
-
             if (targetId === userId){
                 console.log("here")
                 receiverName = playerName;
@@ -147,25 +140,18 @@ export const   Battle = (props:IProps) => {
                 setOpponentHealth(remainingHp);
                 setOpponentSpell({ spell: spellName, round: counter + 1 });
             }
-            
             newMessage = newMessage + `\n${senderName} used ${spellName} against ${receiverName} with ${accuracy }% accuracy`
             newMessage = newMessage + `\n${receiverName} suffered ${damage} damages, they now have ${remainingHp} HP remaining\n`
         })
         setCounter((prevCounter) => prevCounter + 1);
-        // handleEffects();
         setAnnouncerMessage(newMessage);
     });
 
-    useEffect(() => {
-        handleEffects();
-        console.log(`We now have ${playerSpell} and ${opponentSpell} ^^^^^^^^`)
-    }, [playerSpell, opponentSpell]);
-    
+    useEffect(() => { handleEffects(); }, [playerSpell, opponentSpell]);
 
     // Game Over ==> Update view for results
     socket.on(ESocket.BATTLE_OVER, (data : BattleEndPayload) => {
-        console.log(`Received BATTLE_OVER winner has id : ${data.userId} and status : ${data.status}`);
-        let winnerId : number = data.userId;
+        //console.log(`Received BATTLE_OVER winner has id : ${data.userId} and status : ${data.status}`);
         let status : string = data.status;
         if (status === "won"){
             handleGameEnd(playerName);
@@ -174,7 +160,7 @@ export const   Battle = (props:IProps) => {
         }
     });
 
-    // Simulate an emit of attack 
+    // Simulate an emit of attack with phone
     function sendAttack () {
         const data = {
             accuracy : 0.1,
@@ -193,11 +179,7 @@ export const   Battle = (props:IProps) => {
         console.log("Try to send BATTLE_RECEIVE_ACTION --> accuracy : "+data.accuracy+ " spellId : "+ data.spellId + " battleId : "+ data.battleId + " with socket :"+socketMobile.id)
         socketMobile.emit("BATTLE_RECEIVE_ACTION", data);
     }
-    // Simulate an emit of attack 
-
-    // Gargamel :
-    // https://e7.pngegg.com/pngimages/248/179/png-clipart-kakaotalk-kakao-friends-emoticon-character-gargamel-hand-fictional-character-thumbnail.png
-    // https://e7.pngegg.com/pngimages/699/594/png-clipart-smurf-male-character-illustration-gargamel-the-smurfs-azrael-smurfette-brainy-smurf-smurfs-hand-fictional-character-thumbnail.png
+    // Simulate an emit of attack with phone
 
     return (
         <>
@@ -255,8 +237,8 @@ export const   Battle = (props:IProps) => {
                 </div>
             </div>
 
-            {/* Boutons d'actions */}
-            <div className={styles["action-buttons"]}>
+            {/* Boutons d'actions pour simuler le telephone en phase de tests */}
+            {/* <div className={styles["action-buttons"]}>
                 <button
                     className={styles["action-button"]}
                     onClick={sendAttack}
@@ -269,7 +251,7 @@ export const   Battle = (props:IProps) => {
                 >
                     Send a OneShot
                 </button>
-            </div>
+            </div> */}
         </>
     );
 };

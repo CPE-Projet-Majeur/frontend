@@ -6,9 +6,7 @@ interface Iprops {
 }
 
 export const QrCode = (props : Iprops) => {
-
     let qrdata = props.qrdata;
-
     return (
         <div>
             <h2>Pairing</h2>

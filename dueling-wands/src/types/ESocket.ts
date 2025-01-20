@@ -4,8 +4,6 @@ export enum ESocket {
     BATTLE_START= "BATTLE_START",
     BATTLE_SEND_ACTION= "BATTLE_SEND_ACTION",
     BATTLE_OVER= "BATTLE_OVER",
-    BRACKET_UPDATE = 'BRACKET_UPDATE', // ?
-    UPDATE_USER_BATTLE = "UPDATE_USER_BATTLE", // ?
 
     //Tournament
     // Participants send this event when they try to join a tournament
@@ -22,8 +20,6 @@ export enum ESocket {
     TOURNAMENT_UPDATED = "TOURNAMENT_UPDATED",
     // The administrator sends this event to start the tournament
     TOURNAMENT_START = "TOURNAMENT_START",
-    // This event is sent when the tournament has successfully started
-    //TOURNAMENT_STARTED = "TOURNAMENT_STARTED",
     // This event is sent when a new bracket starts
     TOURNAMENT_BRACKET_START = "TOURNAMENT_BRACKET_START",
     // This event is sent when the tournament is finished
