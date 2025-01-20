@@ -178,7 +178,7 @@ export const   Battle = (props:IProps) => {
     function sendAttack () {
         const data = {
             accuracy : 0.1,
-            spellId : 2, // 8 one shot pour les tests
+            spellId : 4, // 8 one shot pour les tests
             battleId : battleId,
         };
         console.log("Try to send BATTLE_RECEIVE_ACTION --> accuracy : "+data.accuracy+ " spellId : "+ data.spellId + " battleId : "+ data.battleId + " with socket :"+socketMobile.id)
