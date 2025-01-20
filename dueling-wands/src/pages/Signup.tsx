@@ -6,12 +6,13 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { update_user } from "../slices/userSlice";
-import { register, manageCookies } from "../services/userService";
+import { register, manageCookies, fetchUserByName } from "../services/userService";
 import styles from "./CSS/signup.module.css";
 
 import IUser from '../types/IUser';
 import CarouselComponent from "../components/signup/CarouselComponent";
 import EHouses from "../types/EHouses";
+import { jwtDecode } from "jwt-decode";
 
 export const Signup = () => {
     const dispatch = useDispatch();
@@ -50,7 +51,7 @@ export const Signup = () => {
         // Gestion des critères d'acceptation du mot de passe
         if (!checkPassword()){return;}
 
-        const user: IUser = {
+        const submittedUser: IUser = {
             login,
             password : password.toString(),
             firstName,
@@ -65,16 +66,19 @@ export const Signup = () => {
 
         // Contact de la backend et gestion des erreurs
         try {
-            const registration = await register(user);
+            const registration = await register(submittedUser);
             const token = registration.token;
-            user.id = registration.user.id;
+            const decoded = jwtDecode(token);
+            // user.id = registration.user.id;
             
             if (!token) {
                 throw new Error("Token not found in the response");
             }
+            const user: IUser = await fetchUserByName(decoded.sub!);
+            console.log("Données utilisateur récupérées :", user);
+            
             // Mise du token du user dans les cookies #securité
             manageCookies(token);
-            console.log("Utilisateur créé avec succès :", user);
 
             // Mise à jour du store Redux avec le nouvel utilisateur
             dispatch(update_user({ user: user }));

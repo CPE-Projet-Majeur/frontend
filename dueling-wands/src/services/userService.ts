@@ -43,7 +43,7 @@ export const register = async (user: IUser): Promise<Ilogin> => {
  */
 export const login = async (login: string, password: string): Promise<Ilogin> => {
     const url: string = base_url+"/login";
-    console.log("try to request for login : ", login, password);
+    //console.log("try to request for login : ", login);
 
     const response = await fetch(url, {
         method: "POST",
@@ -76,40 +76,40 @@ export const fetchUserByName = async (userName: string): Promise<IUser> => {
     return await response.json();
 };
 
-export const fetchUserById = async (userId: number): Promise<IUser> => {
-    const url: string = base_url+"/user/"+userId;
+// export const fetchUserById = async (userId: number): Promise<IUser> => {
+//     const url: string = base_url+"/users/"+userId;
 
-    const response = await fetch(url, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
-    });
+//     const response = await fetch(url, {
+//         method: "GET",
+//         headers: {
+//             "Content-Type": "application/json",
+//         },
+//     });
 
-    if (!response.ok) {
-        throw new Error(`Erreur lors de la récupération de l'utilisateur : ${response.statusText}`);
-    }
+//     if (!response.ok) {
+//         throw new Error(`Erreur lors de la récupération de l'utilisateur : ${response.statusText}`);
+//     }
 
-    return await response.json();
-};
+//     return await response.json();
+// };
 
-export const fetchAllUsers = async (): Promise<IUser[]> => {
-    try{
-        const url: string = base_url+"/users";
-        const response = await fetch(url, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
+// export const fetchAllUsers = async (): Promise<IUser[]> => {
+//     try{
+//         const url: string = base_url+"/users";
+//         const response = await fetch(url, {
+//             method: "GET",
+//             headers: {
+//                 "Content-Type": "application/json",
+//             },
+//         });
 
-        if (!response.ok) {
-            throw new Error(`Erreur lors de la récupération des utilisateurs`);
-        }
+//         if (!response.ok) {
+//             throw new Error(`Erreur lors de la récupération des utilisateurs`);
+//         }
 
-        return await response.json();
-    } catch (error){
-        console.error('Erreur lors de la requête fetchAllUsers:', error);
-        return [];
-    }
-};
+//         return await response.json();
+//     } catch (error){
+//         console.error('Erreur lors de la requête fetchAllUsers:', error);
+//         return [];
+//     }
+// };

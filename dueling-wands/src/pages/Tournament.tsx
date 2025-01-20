@@ -10,6 +10,7 @@ import { EWeather } from '../types/EWeather.ts';
 import { Player, StartPayload } from '../types/TBattle.ts';
 import { WaitMenu } from '../components/duel/WaitMenu.tsx';
 import { useSelector } from 'react-redux';
+import Tree from '../components/tournament/Tree.tsx';
 
 let SOCKET_SERVER_URL: string;
 const dev: string = `${import.meta.env.VITE_ENV}`
@@ -45,7 +46,8 @@ export const Tournament = () => {
     const [weather, setWeather] = useState(EWeather.SUNNY);
     const [battleId, setBattleId] = useState(-1);
     const [inFight,setInFight] = useState(false);
-    const [wait,setWait] = useState(false);
+    const [wait, setWait] = useState(false);
+    const [tournamentOver, setTournamentOver] = useState(false);
 
     // Initialisation de la socket
     useEffect(() => {
@@ -92,11 +94,9 @@ export const Tournament = () => {
             setInFight(true);
         });
 
-        // Receive the new version of the Tree
-        // socket.on(ESocket.TOURNAMENT_UPDATED, (data) => {
-        //     console.log("Received TOURNAMENT_UPDATED : "+ data);
-        //     setTree(data.tree);
-        // })
+        socket.on(ESocket.TOURNAMENT_OVER, (data : number[])=>{
+            setTournamentOver(true);
+        });
 
         // Receive an error ==> User can be alerted
         socket.on(ESocket.ERROR, (data) => {
@@ -104,6 +104,13 @@ export const Tournament = () => {
         });
     }
 
+    function RestartNewTournament (){
+        setInTournament(false);
+        setPlayers([]);
+        setInFight(false);
+        setWait(false);
+        setTournamentOver(false);
+    }
 
     // Section temporaire pour tester les actions du mobile 
     const [socketMobile, setSocketMobile] = useState<Socket>();
@@ -139,9 +146,17 @@ export const Tournament = () => {
                     <WaitMenu />
                 </div>
             )}
-            {inTournament && socket && socketMobile && !wait && inFight &&(
+            {inTournament && socket && socketMobile && !wait && inFight && !tournamentOver &&(
                 <div className={styles.section}>
                     <Duel battleId={battleId} weather={weather} players={players} socket={socket} socketMobile={socketMobile}/>
+                </div>
+            )}
+            {tournamentOver && (
+                <div className={styles.section}>
+                    <h2>The tournament is Over</h2>
+                    <p>Thanks for your <b>Magic</b> participation <b>Warloks</b></p>
+                    <Tree tournamentData={tree}/>
+                    <button onClick={RestartNewTournament}>Start a new Tournament</button>
                 </div>
             )}
         </div>

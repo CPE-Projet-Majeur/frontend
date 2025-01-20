@@ -10,7 +10,7 @@ import ESpellAffinities from '../types/ESpellAffinity';
 export const Grimoire = () => {
 
     let spellList : ISpell[];
-    //spellList = await fetchAllSpells();
+    //spellList : ISpell[] = await fetchAllSpells();
 
     spellList = [
       {
@@ -61,6 +61,8 @@ export const Grimoire = () => {
 
       // EAU :
       //https://videos.pexels.com/video-files/7385122/7385122-uhd_2560_1440_30fps.mp4
+      //FEU
+      //https://videos.pexels.com/video-files/2715412/2715412-uhd_2560_1440_30fps.mp4
       
 
     return (
@@ -68,9 +70,10 @@ export const Grimoire = () => {
         <CCarousel controls indicators dark interval={false} className="c-carousel">
         {spellList.map((item) => (
           <CCarouselItem key={item.id}>
-            {/* <CImage className="d-block w-100 c-image" src={"/images/"+item.name+".mp4"} /> */}
-            <CImage className="d-block w-100 c-image" src={"https://videos.pexels.com/video-files/2715412/2715412-uhd_2560_1440_30fps.mp4"} />
+            <CImage className="d-block w-100 c-image" src={""} />
+            {/* <video autoPlay playsInline loop className="d-block w-100 c-image" src="https://videos.pexels.com/video-files/2715412/2715412-uhd_2560_1440_30fps.mp4" /> */}
             <CCarouselCaption className="d-none d-md-block ccarousel-caption">
+            <img className="w-100 tuto" src="/images/patronus.jpg"/>
               <h5> {item.name}</h5>
               <p>{item.description}</p>
               <p>Type : {item.type}</p>

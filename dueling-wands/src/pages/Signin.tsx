@@ -3,13 +3,14 @@
  */
 
 import React, { useState } from "react";
-import { login, manageCookies } from "../services/userService";
+import { fetchUserByName, login, manageCookies } from "../services/userService";
 import { useDispatch } from "react-redux";
 import { update_user } from "../slices/userSlice";
 import { NavLink, useNavigate } from "react-router-dom";
 import IUser from "../types/IUser";
 import Ilogin from "../types/Ilogin";
 import styles from "./CSS/signin.module.css";
+import { jwtDecode } from "jwt-decode";
 
 export const SignIn = () => {
     const [username, setUsername] = useState("");
@@ -25,13 +26,17 @@ export const SignIn = () => {
         try {
             // Première requête : Authentification
             const userLogin : Ilogin = await login(username, password);
+            const decoded = jwtDecode(userLogin.token);
+            //console.log(decoded)
             //console.log("Données de connexion récupérées :", userLogin);
             //console.log(`Utilisateur authentifié avec l'ID : ${userLogin.user.id}`);
-
-            // // Deuxième requête : Récupération des informations utilisateur
-            // const user: IUser = await fetchUserById(userLogin.user.id);
-            // console.log("Données utilisateur récupérées :", user);
-            const user : IUser = userLogin.user;
+            if (!decoded) {
+                throw new Error("Token not found in the response");
+            }
+            // Deuxième requête : Récupération des informations utilisateur
+            const user: IUser = await fetchUserByName(decoded.sub!);
+            console.log("Données utilisateur récupérées :", user);
+            //const user : IUser = userLogin.user;
 
             // Gestion du Token, mise dans les cookies
             manageCookies(userLogin.token);
