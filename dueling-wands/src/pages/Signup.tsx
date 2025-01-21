@@ -45,6 +45,7 @@ export const Signup = () => {
 
         // Gestion des critères d'acceptation du mot de passe
         if (!checkPassword()){return;}
+        if (login.length > 12){alert("You may use a shorter username");return;}
 
         const submittedUser: IUser = {
             login,

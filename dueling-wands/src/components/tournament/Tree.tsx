@@ -32,6 +32,7 @@ function convertToMatchFormat(tree: string): Record<string, Match[]> {
                     };
                 } catch (innerError) {
                     console.error("Erreur lors du parsing d'un nœud:", innerError);
+                    console.log("nodeStr:", nodeStr);
                     return { players: [], winner: null };
                 }
             });
