@@ -23,6 +23,7 @@ if (dev === "DEV") {
 
 export type TournamentNode ={
     _userIds: number[],
+    userNames : string[],
     _winners: number[],
     _status: string,
     _battleId: number,
@@ -93,7 +94,9 @@ export const Tournament = () => {
             setInFight(true);
         });
 
-        socket.on(ESocket.TOURNAMENT_OVER, (data : number[])=>{
+        socket.on(ESocket.TOURNAMENT_OVER, (data)=>{
+            let receivedTree = data.tree;
+            setTree(receivedTree);
             setTournamentOver(true);
         });
 
@@ -111,22 +114,6 @@ export const Tournament = () => {
         setTournamentOver(false);
     }
 
-    // Section temporaire pour tester les actions du mobile 
-    const [socketMobile, setSocketMobile] = useState<Socket>();
-    // Initialisation de la socket
-    useEffect(() => {
-        const newSocketMobile = io(SOCKET_SERVER_URL, { query: { userId: user.id, userFirstName:user.login, userLastName:user.lastName} });
-        setSocketMobile(newSocketMobile);
-
-        newSocketMobile.on("connect", () => {
-            console.log(`✅ Connected to the server with mobile socket id : ${newSocketMobile.id}`);
-        });        return () => {
-            newSocketMobile.disconnect();
-        };
-        
-    }, [user]);
-    // Fin de section temporaire pour testes les actions du mobile
-
     return (
         <div className={styles.container}>
             <h1>Tournament</h1>
@@ -135,9 +122,9 @@ export const Tournament = () => {
                     <TournamentCreation socket={socket}/>
                 </div>
             ) }
-            {inTournament && socket && socketMobile && !inFight && !wait &&(
+            {inTournament && socket && !inFight && !wait &&(
                 <div className={styles.section}>
-                    <Matchmaking battleId={battleId} tree={tree} socketMobile={socketMobile}/>
+                    <Matchmaking battleId={battleId} tree={tree}/>
                 </div>
             )}
             {inTournament && !inFight && wait && (
@@ -145,9 +132,9 @@ export const Tournament = () => {
                     <WaitMenu />
                 </div>
             )}
-            {inTournament && socket && socketMobile && !wait && inFight && !tournamentOver &&(
+            {inTournament && socket && !wait && inFight && !tournamentOver &&(
                 <div className={styles.section}>
-                    <Duel battleId={battleId} weather={weather} players={players} socket={socket} socketMobile={socketMobile}/>
+                    <Duel battleId={battleId} weather={weather} players={players} socket={socket}/>
                 </div>
             )}
             {tournamentOver && (

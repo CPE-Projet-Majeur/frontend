@@ -29,6 +29,7 @@ export const register = async (user: IUser): Promise<Ilogin> => {
     });
 
     if (!response.ok) {
+        alert("This login already exists, please choose a better one")
         throw new Error(`Erreur lors de l'inscription : ${response.statusText}`);
     }
 
@@ -43,8 +44,6 @@ export const register = async (user: IUser): Promise<Ilogin> => {
  */
 export const login = async (login: string, password: string): Promise<Ilogin> => {
     const url: string = base_url+"/login";
-    //console.log("try to request for login : ", login);
-
     const response = await fetch(url, {
         method: "POST",
         headers: {

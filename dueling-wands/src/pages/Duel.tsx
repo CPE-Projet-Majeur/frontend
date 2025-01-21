@@ -10,7 +10,6 @@ interface IProps {
     battleId : number,
     weather : EWeather,
     players : Player[],
-    socketMobile : Socket,
 }
 
 export const Duel = (props : IProps) => {
@@ -23,7 +22,7 @@ export const Duel = (props : IProps) => {
             <div className={styles.overlay}>
                 {mode === 'battle' && (
                     <div className={styles.battle}>
-                        <Battle socketMobile={props.socketMobile} battleId={props.battleId} weather={props.weather} players={props.players} socket={socket} onGameEnd={winner => {
+                        <Battle battleId={props.battleId} weather={props.weather} players={props.players} socket={socket} onGameEnd={winner => {
                             setWinner(winner);
                             setMode('gameOver');
                         }} />
