@@ -37,9 +37,7 @@ export const Grimoire = () => {
         {spellList && spellList.length > 0 && spellList.map((item) => (
           <CCarouselItem key={item.id}>
             <CImage className="d-block w-100 c-image" src={"https://img2.wallspic.com/crops/3/1/8/7/5/157813/157813-foret_magique-fee-foret-magie-atmosphere-3840x2160.jpg"} />
-            {/* <video autoPlay playsInline loop className="d-block w-100 c-image" src="https://videos.pexels.com/video-files/2715412/2715412-uhd_2560_1440_30fps.mp4" /> */}
             <CCarouselCaption className="d-none d-md-block ccarousel-caption">
-            {/* <img className="w-100 tuto" src="/images/patronus.jpg"/> */}
               <img 
                   className="w-100 tuto" 
                   src={`/carousel/${item?.name?.toLowerCase() || "default"}.gif`} 

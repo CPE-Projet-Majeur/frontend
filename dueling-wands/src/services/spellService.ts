@@ -11,8 +11,6 @@ if (dev === "DEV") {
 // Acquisition de tous les spells pour affichage dans le caroussel
 export const fetchAllSpells = async (): Promise<ISpell[]> => {
     const url: string = base_url+"/spells";
-    console.log(url)
-
     const response = await fetch(url, {
         method: "GET",
         headers: {
@@ -20,10 +18,8 @@ export const fetchAllSpells = async (): Promise<ISpell[]> => {
         },
         credentials: 'include',
     });
-
     if (!response.ok) {
         throw new Error(`Erreur lors de la recupération des sorts : ${response.statusText}`);
     }
-
     return await response.json();
 };
