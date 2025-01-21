@@ -126,23 +126,21 @@ export const   Battle = (props:IProps) => {
             let remainingHp : number = action.remainingHp;
             let damage : number = action.damage;
             if (targetId === userId){
-                console.log("here")
                 receiverName = playerName;
                 senderName = opponentName;
                 setPlayerHealth(remainingHp);
                 setOpponentSpell({ spell: spellName, round: counter + 1 });
             }else {
-                console.log("there")
                 receiverName = opponentName;
                 senderName = playerName;
                 setOpponentHealth(remainingHp);
                 setPlayerSpell({ spell: spellName, round: counter + 1 });
             }
-            newMessage = newMessage + `\n${senderName} used ${spellName} against ${receiverName} with ${accuracy }% accuracy`
-            newMessage = newMessage + `\n${receiverName} suffered ${damage} damages, they now have ${remainingHp} HP remaining\n`
+            newMessage = newMessage + `${senderName} used ${spellName} against ${receiverName} with ${accuracy }% accuracy`;
+            newMessage = newMessage + `\n${receiverName} suffered ${damage} damages, they now have ${remainingHp} HP remaining\n\n`;
         })
-        setCounter((prevCounter) => prevCounter + 1);
         setAnnouncerMessage(newMessage);
+        setCounter((prevCounter) => prevCounter + 1);
     });
 
     useEffect(() => { handleEffects(); }, [playerSpell, opponentSpell]);
