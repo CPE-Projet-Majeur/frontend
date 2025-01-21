@@ -15,7 +15,6 @@ interface IProps {
     players : Player[],
     weather : EWeather,
     battleId : number,
-    socketMobile : Socket,
 }
 
 const defaultMessage = "Message Displayer"
@@ -40,7 +39,6 @@ export const   Battle = (props:IProps) => {
     let weather : EWeather = props.weather;
     let battleId : number = props.battleId;
     const socket = props.socket;
-    const socketMobile = props.socketMobile;
 
     const handleGameEnd = (winner: string) => {
         setWinner(winner);
@@ -132,13 +130,13 @@ export const   Battle = (props:IProps) => {
                 receiverName = playerName;
                 senderName = opponentName;
                 setPlayerHealth(remainingHp);
-                setPlayerSpell({ spell: spellName, round: counter + 1 });
+                setOpponentSpell({ spell: spellName, round: counter + 1 });
             }else {
                 console.log("there")
                 receiverName = opponentName;
                 senderName = playerName;
                 setOpponentHealth(remainingHp);
-                setOpponentSpell({ spell: spellName, round: counter + 1 });
+                setPlayerSpell({ spell: spellName, round: counter + 1 });
             }
             newMessage = newMessage + `\n${senderName} used ${spellName} against ${receiverName} with ${accuracy }% accuracy`
             newMessage = newMessage + `\n${receiverName} suffered ${damage} damages, they now have ${remainingHp} HP remaining\n`
@@ -159,27 +157,6 @@ export const   Battle = (props:IProps) => {
             handleGameEnd(opponentName);
         }
     });
-
-    // Simulate an emit of attack with phone
-    function sendAttack () {
-        const data = {
-            accuracy : 0.1,
-            spellId : 4, // 8 one shot pour les tests
-            battleId : battleId,
-        };
-        console.log("Try to send BATTLE_RECEIVE_ACTION --> accuracy : "+data.accuracy+ " spellId : "+ data.spellId + " battleId : "+ data.battleId + " with socket :"+socketMobile.id)
-        socketMobile.emit("BATTLE_RECEIVE_ACTION", data);
-    }
-    function oneShot () {
-        const data = {
-            accuracy : 1,
-            spellId : 8, // 8 one shot pour les tests
-            battleId : battleId,
-        };
-        console.log("Try to send BATTLE_RECEIVE_ACTION --> accuracy : "+data.accuracy+ " spellId : "+ data.spellId + " battleId : "+ data.battleId + " with socket :"+socketMobile.id)
-        socketMobile.emit("BATTLE_RECEIVE_ACTION", data);
-    }
-    // Simulate an emit of attack with phone
 
     return (
         <>
@@ -236,22 +213,6 @@ export const   Battle = (props:IProps) => {
                     />
                 </div>
             </div>
-
-            {/* Boutons d'actions pour simuler le telephone en phase de tests */}
-            {/* <div className={styles["action-buttons"]}>
-                <button
-                    className={styles["action-button"]}
-                    onClick={sendAttack}
-                >
-                    Send an Attack
-                </button>
-                <button
-                    className={styles["action-button"]}
-                    onClick={oneShot}
-                >
-                    Send a OneShot
-                </button>
-            </div> */}
         </>
     );
 };

@@ -26,7 +26,8 @@ function convertToMatchFormat(tree: string): Record<string, Match[]> {
                     
                     // Construction d'un match
                     return {
-                        players: node.userId.map((id: number) => `Player ${id}`),
+                        //players: node.userId.map((id: number) => `Player ${id}`),
+                        players: node.userNames.map((name: string) => `${name}`),
                         winner: node.winners.length > 0 ? `Player ${node.winners[0]}` : null
                     };
                 } catch (innerError) {
@@ -43,7 +44,6 @@ function convertToMatchFormat(tree: string): Record<string, Match[]> {
 
 export const Tree = (props: TreeProps) => {
     const tournamentData = convertToMatchFormat(props.tournamentData as unknown as string);
-    //console.log(tournamentData)
     
     if (!tournamentData || Object.keys(tournamentData).length === 0) {
         return <div className={styles.treeContainer}><p>No tournament data available</p></div>;

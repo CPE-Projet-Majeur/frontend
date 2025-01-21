@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-//import { set_owner_id } from '../../slices/tournamentSlice';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import styles from "./CSS/tournamentCreation.module.css"
 import { Socket } from 'socket.io-client';
@@ -16,7 +15,6 @@ type TournamentParticipant = {
 }
 
 export const TournamentCreation = (props : IProps) => {
-    const dispatch = useDispatch();
     const socket = props.socket;
     const ownerName : string = useSelector((state: RootState) => state.user.user?.login || "");
     const ownerId : number = useSelector((state: RootState) => state.user.user?.id || -1);
