@@ -28,7 +28,7 @@ function convertToMatchFormat(tree: string): Record<string, Match[]> {
                     return {
                         //players: node.userId.map((id: number) => `Player ${id}`),
                         players: node.userNames.map((name: string) => `${name}`),
-                        winner: node.winners.length > 0 ? `Player ${node.winners[0]}` : null
+                        winner: node.winnersNames.length > 0 ? `${node.winnersNames[0]}` : null
                     };
                 } catch (innerError) {
                     console.error("Erreur lors du parsing d'un nœud:", innerError);
